@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "build:prod": "SITE_URL=https://kiwu-81b24.web.app astro build",
+    "build:prod": "SITE_URL=https://kiwu.web.app astro build",
     "preview": "astro preview",
     "validate": "node scripts/validate.mjs",
     "test": "npm run build && npm run validate"

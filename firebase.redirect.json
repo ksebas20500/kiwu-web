@@ -1,0 +1,1 @@
+{ "hosting": { "site": "kiwu-81b24", "public": "redirect", "redirects": [{ "source": "**", "destination": "https://kiwu.web.app", "type": 301 }] } }
