@@ -1,0 +1,38 @@
+---
+import Page from '../layouts/Page.astro';
+import Cmd from '../components/Cmd.astro';
+import { LINUX_RELEASE, LINUX_TARBALL, REPO, RAW, ISSUES } from '../site';
+---
+<Page title="Kiwu para Linux: instalación, dependencias y estado" h1="Kiwu para Linux"
+  description="Kiwu para Linux 0.1.0 (GTK4 y libadwaita, Python): dependencias en Arch, instalación con un comando o a mano, configuración de Hyprland y limitaciones actuales."
+  lead="Versión de escritorio para Linux hecha con Python, GTK4 y libadwaita. Pensada para Arch Linux con Hyprland (Wayland).">
+  <div class="notice" role="note">
+    <p><strong>Estado: primera versión (0.1.0), experimental.</strong> Según su documentación, se escribió sin poder ejecutarla en Linux. La lógica (datos, importación desde macOS, recordatorios, vistas previas) tiene pruebas automáticas, pero <strong>la interfaz todavía no se había ejecutado sobre GTK real</strong> cuando se redactó. Espera fallos de interfaz, sobre todo en el editor de notas, y repórtalos en <a href={ISSUES} rel="noopener">GitHub</a>. El release está publicado como <i lang="en">pre-release</i>.</p>
+  </div>
+  <h2>Plataforma y limitaciones</h2>
+  <ul>
+    <li>Objetivo documentado: Arch Linux + Hyprland, con GTK4 nativo en Wayland. No hay garantía documentada para otras distribuciones o escritorios (el instalador muestra órdenes de dependencias para Fedora y Debian, pero no están probadas según el repositorio).</li>
+    <li>Sin widgets de escritorio.</li>
+    <li>Wayland no permite atajos globales: Kiwu acepta órdenes como <code>kiwu --nueva-tarea</code> que se enlazan en Hyprland.</li>
+    <li>Los recordatorios solo salen si Kiwu está en marcha y hay un demonio de notificaciones.</li>
+    <li>La reproducción de vídeos dentro de las notas es opcional (requiere WebKitGTK 6).</li>
+  </ul>
+  <h2>Dependencias (Arch)</h2>
+  <Cmd cmd="sudo pacman -S python python-gobject gtk4 libadwaita gtksourceview5" label="Dependencias obligatorias en Arch" />
+  <p>Opcionales: <code>webkitgtk-6.0</code> (vídeos en las notas), <code>xdg-desktop-portal-gtk</code> (selector de archivos y tema) y <code>mako</code> o similar (notificaciones).</p>
+  <h2>Instalar</h2>
+  <h3>Opción 1: un comando</h3>
+  <p>Instala en <code>~/.local</code>, sin <code>sudo</code>, comprueba la suma de verificación y crea la entrada en el menú de aplicaciones:</p>
+  <Cmd cmd={`curl -fsSL ${RAW}/linux/install.sh | bash`} label="Instalar Kiwu en Linux desde la terminal" />
+  <h3>Opción 2: a mano</h3>
+  <p>Descarga <a href={LINUX_TARBALL}><code>kiwu-linux.tar.gz</code></a> (versión <a href={LINUX_RELEASE} rel="noopener">linux-v0.1.0</a>) y su archivo <code>.sha256</code> desde la página del release.</p>
+  <Cmd cmd={`sha256sum -c kiwu-linux.tar.gz.sha256\ntar -xzf kiwu-linux.tar.gz\ncd kiwu-linux-*\n./install.sh`} label="Instalación manual en Linux" />
+  <p>Para desinstalar: <code>./install.sh --desinstalar</code> (no borra tus datos). También existe un <code>PKGBUILD</code> para Arch y puedes ejecutar desde el código fuente con <code>./run.sh</code> en la carpeta <code>linux</code> del <a href={REPO} rel="noopener">repositorio</a>.</p>
+  <h2>Hyprland</h2>
+  <p>Kiwu es de instancia única. Ejemplo de enlaces en <code>~/.config/hypr/hyprland.conf</code>:</p>
+  <Cmd cmd={`bind = SUPER, N, exec, kiwu --nueva-tarea\nbind = SUPER SHIFT, K, exec, kiwu --mostrar\nexec-once = kiwu --segundo-plano`} label="Ejemplo de configuración de Hyprland" />
+  <p>Hay más opciones (reglas de ventana, desenfoque, NVIDIA y <code>kiwu --diagnostico</code>) en el <a href={`${REPO}/blob/main/linux/README.md`} rel="noopener">README de Linux</a>.</p>
+  <h2>Tus datos</h2>
+  <p>La base de datos se guarda en <code>~/.local/share/kiwu/kiwu.db</code> y los ajustes en <code>~/.config/kiwu/settings.json</code>. Puedes importar tus datos de macOS desde <em>Ajustes → Datos</em>, copiando antes la carpeta <code>~/Library/Application Support/Kiwu</code> del Mac.</p>
+  <p>Ver también: <a href="/instalar/">instalar</a> · <a href="/preguntas-frecuentes/">preguntas frecuentes</a> · <a href="/privacidad/">privacidad</a>.</p>
+</Page>

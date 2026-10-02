@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+import { nav, REPO, SITE_URL_SET } from '../site';
+interface Props { title: string; description: string; jsonLd?: object[]; noindex?: boolean; ogType?: string }
+const { title, description, jsonLd = [], noindex = false, ogType = 'website' } = Astro.props;
+const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
+const fullTitle = path === '/' ? title : `${title} · Kiwu`;
+// Sin SITE_URL (dominio aún no definido) todo el sitio se marca noindex para no indexar un dominio provisional.
+const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#fbf4ee" />
+    <meta property="og:site_name" content="Kiwu" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Icono de Kiwu junto a una captura de la app en modo tablero" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {jsonLd.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#contenido">Saltar al contenido</a>
+    <header class="site-header">
+      <div class="wrap bar">
+        <a class="brand" href="/" aria-label="Kiwu, inicio">
+          <img src="/icono-256.png" width="32" height="32" alt="" /> <span>Kiwu</span>
+        </a>
+        <nav aria-label="Principal">
+          <ul>
+            {nav.map((n) => (
+              <li><a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="contenido"><slot /></main>
+    <footer class="site-footer">
+      <div class="wrap foot">
+        <div>
+          <strong>Kiwu</strong>
+          <p>Tareas, calendario y apuntes para estudiantes, en macOS y Linux. Software libre bajo licencia MIT.</p>
+        </div>
+        <nav aria-label="Pie de página">
+          <ul>
+            <li><a href="/instalar/">Instalar</a></li>
+            <li><a href="/privacidad/">Privacidad</a></li>
+            <li><a href="/licencia/">Licencia</a></li>
+            <li><a href={REPO} rel="noopener">Código en GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

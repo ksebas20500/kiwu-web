@@ -1,0 +1,23 @@
+---
+import Page from '../layouts/Page.astro';
+const faqs: [string, string][] = [
+  ['¿Qué es Kiwu?', 'Una aplicación de escritorio de código abierto para organizar tareas por materia (en lista o tablero), un calendario de entregas y notas por bloques, para macOS y Linux. Antes se llamaba TaskFlow.'],
+  ['¿Necesito una cuenta o la nube?', 'No. Kiwu no tiene servidor ni cuentas, y guarda tus datos en tu equipo.'],
+  ['¿Kiwu usa Internet?', 'Solo cuando pegas un enlace en una nota: entonces descarga su vista previa (título, descripción e imagen) o reproduce un vídeo de YouTube o Vimeo. No envía tus datos. Los instaladores por terminal y los de descarga también usan Internet al instalar.'],
+  ['¿Qué sistemas son compatibles?', 'macOS 13 o superior (widgets en macOS 14+) y Linux con GTK4 y libadwaita, documentado para Arch Linux con Hyprland. No hay versión para Windows, iOS ni Android.'],
+  ['¿Es gratis y de código abierto?', 'El código se distribuye bajo licencia MIT y está en GitHub; la licencia permite usarlo, copiarlo y modificarlo.'],
+  ['¿Por qué macOS me dice que no puede verificar al desarrollador?', 'Porque la app no está notarizada por Apple (requiere una cuenta de pago). Puedes abrirla desde Ajustes del Sistema → Privacidad y seguridad → Abrir igualmente, o con xattr -dr com.apple.quarantine /Applications/Kiwu.app. El instalador por terminal lo hace por ti.'],
+  ['¿Funciona bien en Linux?', 'Es la primera versión (0.1.0) y su documentación advierte que la interfaz no se había ejecutado sobre GTK real cuando se redactó. Es experimental: espera fallos, sobre todo en el editor de notas, y repórtalos en GitHub.'],
+  ['¿Hay widgets?', 'Sí en macOS 14 o superior (Deberes, Nota rápida y Calendario de deberes). En Linux no hay widgets por ahora.'],
+  ['¿Puedo pasar mis datos de macOS a Linux?', 'Sí: copia la carpeta ~/Library/Application Support/Kiwu al equipo Linux e impórtala en Ajustes → Datos. Los archivos adjuntos no se enlazan solos y aparecen como «Sin vincular».'],
+  ['¿Sincroniza entre dispositivos?', 'No. La sincronización entre Macs (iCloud) figura como pendiente en la documentación de macOS; hoy los datos son locales.'],
+  ['¿Vengo de TaskFlow, pierdo mis datos?', 'No: al abrir Kiwu por primera vez se copian tus listas, tareas, notas y fondo a la nueva carpeta; la antigua se conserva como copia de seguridad.'],
+];
+const jsonLd = [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }];
+---
+<Page title="Preguntas frecuentes sobre Kiwu" h1="Preguntas frecuentes"
+  description="Respuestas sobre Kiwu: qué es, sistemas compatibles, privacidad y uso de Internet, aviso de macOS por falta de notarización, estado en Linux, widgets y migración desde TaskFlow."
+  jsonLd={jsonLd}>
+  {faqs.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+  <p>Más información: <a href="/macos/">macOS</a>, <a href="/linux/">Linux</a>, <a href="/privacidad/">privacidad</a> e <a href="/instalar/">instalación</a>.</p>
+</Page>

@@ -1,0 +1,9 @@
+import type { APIRoute } from 'astro';
+import { SITE_URL_SET } from '../site';
+
+// Permite todo (incluidos CSS/JS). Solo anuncia el sitemap si el dominio real está definido en SITE_URL.
+export const GET: APIRoute = ({ site }) => {
+  const lines = ['User-agent: *', 'Allow: /', ''];
+  if (SITE_URL_SET) lines.push(`Sitemap: ${new URL('/sitemap-index.xml', site).href}`, '');
+  return new Response(lines.join('\n'), { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+};

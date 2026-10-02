@@ -1,0 +1,29 @@
+---
+import Page from '../layouts/Page.astro';
+import Cmd from '../components/Cmd.astro';
+import { MACOS_DMG, MACOS_RELEASE, LINUX_TARBALL, LINUX_RELEASE, RELEASES, INSTALL_CMD, REPO } from '../site';
+---
+<Page title="Instalar Kiwu en macOS y Linux" h1="Instalar Kiwu"
+  description="Descarga e instala Kiwu: comando único para macOS y Linux, o descarga manual de Kiwu.dmg y kiwu-linux.tar.gz desde GitHub Releases, con comprobación de suma de verificación."
+  lead="Elige tu sistema. Los archivos se descargan siempre de GitHub Releases, no de este sitio.">
+  <h2>Con un comando (macOS y Linux)</h2>
+  <p>El script detecta tu sistema, ejecuta el instalador que le corresponde y comprueba la suma de verificación de lo que descarga.</p>
+  <Cmd cmd={INSTALL_CMD} label="Comando de instalación para macOS y Linux" />
+  <p class="small">Es buena práctica leer un script antes de ejecutarlo: <a href={`${REPO}/blob/main/install.sh`} rel="noopener">install.sh</a>.</p>
+  <h2>Descarga manual</h2>
+  <div class="scroll"><table>
+    <caption class="small">Archivos publicados</caption>
+    <thead><tr><th scope="col">Sistema</th><th scope="col">Archivo</th><th scope="col">Estado</th><th scope="col">Release en GitHub</th><th scope="col">Detalles</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">macOS 13+</th><td><a href={MACOS_DMG}><code>Kiwu.dmg</code></a></td><td>Versión 2.0 (estable)</td><td><a href={MACOS_RELEASE} rel="noopener">v2.0.0</a></td><td><a href="/macos/">Guía de macOS</a></td></tr>
+      <tr><th scope="row">Linux (Arch + Hyprland)</th><td><a href={LINUX_TARBALL}><code>kiwu-linux.tar.gz</code></a></td><td>0.1.0 (<i lang="en">pre-release</i>, experimental)</td><td><a href={LINUX_RELEASE} rel="noopener">linux-v0.1.0</a></td><td><a href="/linux/">Guía de Linux</a></td></tr>
+    </tbody>
+  </table></div>
+  <p>Los enlaces de archivo llevan directamente al fichero alojado en GitHub; los de «Release» abren la página de esa versión, donde está también el <code>.sha256</code> de cada archivo. Todas las versiones: <a href={RELEASES} rel="noopener">GitHub Releases</a>. Los dos sistemas tienen numeración independiente.</p>
+  <h2>Antes de instalar</h2>
+  <ul>
+    <li><strong>macOS:</strong> la app no está notarizada; verás un aviso de Gatekeeper la primera vez. <a href="/macos/#descargar-e-instalar">Cómo abrirla</a>.</li>
+    <li><strong>Linux:</strong> hay que instalar antes GTK4, libadwaita y otras dependencias, y la interfaz es experimental. <a href="/linux/">Ver requisitos</a>.</li>
+    <li>No hay versión para Windows, iOS ni Android.</li>
+  </ul>
+</Page>

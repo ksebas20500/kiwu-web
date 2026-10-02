@@ -1,0 +1,16 @@
+---
+import Page from '../../layouts/Page.astro';
+import Shot from '../../components/Shot.astro';
+import calendario from '../../assets/calendario.png';
+import wCal from '../../assets/widgets_calendario.png';
+---
+<Page title="Calendario de entregas" h1="Calendario de entregas"
+  description="El calendario mensual de Kiwu muestra tus deberes por día, con colores suaves. En macOS 14 o superior también hay un widget de calendario."
+  lead="Tus entregas del mes en una sola vista, calculadas a partir de las fechas de tus tareas.">
+  <p>El calendario muestra el mes completo con las entregas en colores pastel. Con doble clic en un día lo expandes para ver todas sus tareas. No hay nada que sincronizar: usa las mismas tareas que ya tienes en tus listas.</p>
+  <figure><Shot src={calendario} alt="Calendario mensual de Kiwu con entregas marcadas en varios días" /><figcaption>Vista mensual.</figcaption></figure>
+  <h2>Widget de calendario en macOS</h2>
+  <p>En macOS 14 o superior puedes añadir el widget <em>Calendario de deberes</em> con el mes y las próximas entregas. En Linux no hay widgets por ahora.</p>
+  <figure><Shot src={wCal} alt="Widget Calendario de deberes de Kiwu mostrando el mes y las próximas entregas" sizes="(min-width: 640px) 480px, 100vw" /></figure>
+  <p>Relacionado: <a href="/funciones/tareas-y-tablero/">tareas y tablero</a> · <a href="/macos/">Kiwu para macOS</a>.</p>
+</Page>

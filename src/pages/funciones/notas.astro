@@ -1,0 +1,18 @@
+---
+import Page from '../../layouts/Page.astro';
+import Shot from '../../components/Shot.astro';
+import notas from '../../assets/notas.png';
+---
+<Page title="Notas por bloques" h1="Notas por bloques"
+  description="Cuadernos y páginas con un editor por bloques en Kiwu: menú de barra, formato de texto, bloques de código con colores, enlaces con vista previa y archivos adjuntos."
+  lead="Un editor de apuntes pensado para clases: bloques, código con colores y enlaces con vista previa.">
+  <figure><Shot src={notas} alt="Editor de notas de Kiwu con el menú de bloques abierto" /><figcaption>Editor por bloques con el menú <code>/</code>.</figcaption></figure>
+  <ul>
+    <li>Cuadernos y páginas con emoji, favoritas y búsqueda.</li>
+    <li>Editor por bloques con menú <code>/</code> y formato de texto (en Linux se documentan negrita, cursiva, subrayado, tachado, código, color, resaltado y enlaces).</li>
+    <li>Bloques de código con colores tipo VS Code (temas Dark+ y Light+).</li>
+    <li>Enlaces con vista previa (título, descripción e imagen) y vídeos de YouTube o Vimeo reproducibles dentro de la nota. Esto requiere conexión a Internet: <a href="/privacidad/">ver privacidad</a>.</li>
+    <li>PDF y Word adjuntos como referencia, sin duplicar el archivo.</li>
+  </ul>
+  <p>Las notas usan el mismo formato en macOS y Linux, y los datos de macOS se pueden importar en Linux (ver <a href="/linux/">Linux</a>).</p>
+</Page>

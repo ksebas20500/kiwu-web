@@ -1,0 +1,19 @@
+---
+// Bloque de comando con botón de copiar (mejora progresiva: sin JS sigue siendo texto seleccionable).
+const { cmd, label } = Astro.props;
+---
+<div class="cmd">
+  <pre tabindex="0" aria-label={label}><code>{cmd}</code></pre>
+  <button type="button" class="copy" data-copy={cmd} hidden>Copiar</button>
+</div>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.copy[data-copy]').forEach((b) => {
+    if (!navigator.clipboard) return;
+    b.hidden = false;
+    b.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(b.dataset.copy ?? ''); b.textContent = 'Copiado'; }
+      catch { b.textContent = 'Selecciona y copia'; }
+      setTimeout(() => (b.textContent = 'Copiar'), 2000);
+    });
+  });
+</script>

@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import Shot from '../components/Shot.astro';
+import Cmd from '../components/Cmd.astro';
+import { MACOS_DMG, REPO, INSTALL_CMD } from '../site';
+import tableroCustom from '../assets/tablero_custom.png';
+import tablero from '../assets/tablero.png';
+import calendario from '../assets/calendario.png';
+import notas from '../assets/notas.png';
+import wDeberes from '../assets/widgets_deberes.png';
+const site = Astro.site!.href.replace(/\/$/, '');
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Kiwu', url: `${site}/`, inLanguage: 'es' },
+  {
+    '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'Kiwu',
+    description: 'Aplicación de escritorio para estudiantes: tareas con vista de lista y tablero, calendario y notas por bloques, con los datos guardados en tu equipo.',
+    applicationCategory: 'ProductivityApplication', operatingSystem: 'macOS 13 o superior, Linux (GTK4 y libadwaita)',
+    url: `${site}/`, downloadUrl: `${site}/instalar/`, license: 'https://opensource.org/licenses/MIT', inLanguage: 'es',
+    author: { '@type': 'Person', name: 'Kevin Sebastián Medina Nava' }, codeRepository: REPO,
+  },
+];
+---
+<Base title="Kiwu: tareas, calendario y apuntes para estudiantes, en tu equipo"
+  description="Kiwu es una app de escritorio libre para macOS y Linux con tareas (lista y tablero), calendario y notas por bloques. Sin cuenta ni nube: tus datos se quedan en tu equipo."
+  jsonLd={jsonLd}>
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <h1>Tus tareas, calendario y apuntes. Todo en tu equipo.</h1>
+        <p class="lead">Kiwu es una aplicación de escritorio de código abierto para organizar la vida académica: deberes por materia, un tablero, un calendario de entregas y notas por bloques. No necesita cuenta ni nube.</p>
+        <div class="actions">
+          <a class="btn primary" href="/macos/">Descargar para macOS</a>
+          <a class="btn secondary" href="/linux/">Instalar en Linux</a>
+        </div>
+        <p class="small">macOS 13 o superior (widgets en macOS 14+) · Linux en versión 0.1.0, aún experimental · Licencia MIT</p>
+      </div>
+      <Shot src={tableroCustom} eager alt="Kiwu en modo tablero con tres columnas (Por hacer, En curso y Hecho) y un fondo de imagen translúcido" />
+    </section>
+
+    <section aria-labelledby="funciones">
+      <h2 id="funciones">Lo que hace Kiwu</h2>
+      <ul class="cards">
+        <li class="card"><h3>Tareas por materia</h3><p>Listas con fecha y hora, recordatorios locales y vistas <em>Hoy</em>, <em>Próximos 7 días</em>, <em>Todas</em> y <em>Completadas</em>. <a href="/funciones/tareas-y-tablero/">Ver tareas y tablero</a>.</p></li>
+        <li class="card"><h3>Calendario de entregas</h3><p>Un mes completo con tus deberes por día. <a href="/funciones/calendario/">Ver el calendario</a>.</p></li>
+        <li class="card"><h3>Notas por bloques</h3><p>Cuadernos, páginas, menú <code>/</code>, código con colores y enlaces con vista previa. <a href="/funciones/notas/">Ver las notas</a>.</p></li>
+      </ul>
+    </section>
+
+    <section class="split">
+      <div>
+        <h2>Orden académico, sin ruido</h2>
+        <p>Organiza cada materia en su lista, cambia entre lista y tablero según cómo pienses el trabajo y arrastra las tareas de <em>Por hacer</em> a <em>En curso</em> y a <em>Hecho</em>.</p>
+        <p><a href="/funciones/">Ver todas las funciones</a></p>
+      </div>
+      <Shot src={tablero} alt="Kiwu en modo tablero: columnas Por hacer, En curso y Hecho" sizes="(min-width: 860px) 600px, 100vw" />
+    </section>
+
+    <section class="split rev">
+      <div>
+        <h2>Calendario y notas en el mismo sitio</h2>
+        <p>Consulta tus entregas del mes y escribe apuntes en un editor por bloques. Puedes adjuntar PDF o Word como referencia sin duplicarlos y vincular una carpeta de tu equipo a cada lista.</p>
+      </div>
+      <div>
+        <Shot src={calendario} alt="Vista de calendario mensual de Kiwu con las entregas" sizes="(min-width: 860px) 600px, 100vw" />
+        <Shot src={notas} alt="Editor de notas de Kiwu con el menú de bloques abierto" sizes="(min-width: 860px) 600px, 100vw" />
+      </div>
+    </section>
+
+    <section class="split" id="privacidad">
+      <div>
+        <h2>Privacidad local</h2>
+        <p>Kiwu no tiene servidor, cuentas, publicidad ni analíticas, y tus datos viven en tu equipo. La app solo se conecta a Internet cuando pegas un enlace en una nota, para obtener su vista previa o reproducir un vídeo compatible (YouTube o Vimeo).</p>
+        <p><a href="/privacidad/">Leer los detalles de privacidad</a></p>
+      </div>
+      <Shot src={wDeberes} alt="Widget de deberes de Kiwu en el escritorio de macOS" sizes="(min-width: 860px) 600px, 100vw" />
+    </section>
+
+    <section aria-labelledby="plataformas">
+      <h2 id="plataformas">macOS y Linux</h2>
+      <div class="cards">
+        <div class="card"><h3>macOS</h3><p>App nativa en SwiftUI para macOS 13 o superior, con widgets en macOS 14+. Instalador universal (Apple Silicon e Intel). No está notarizada por Apple: la primera vez tendrás que autorizarla.</p><p><a href="/macos/">Requisitos e instalación en macOS</a></p></div>
+        <div class="card"><h3>Linux</h3><p>App GTK4 + libadwaita en Python, pensada para Arch Linux con Hyprland. Es la primera versión (0.1.0) y su interfaz aún no se había ejecutado en un entorno GTK real cuando se documentó. Sin widgets.</p><p><a href="/linux/">Estado y limitaciones en Linux</a></p></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="oss">
+      <h2 id="oss">Código abierto</h2>
+      <p>Kiwu se distribuye bajo licencia MIT y su código está en <a href={REPO} rel="noopener">GitHub</a>. Puedes revisarlo, compilarlo tú mismo o abrir un <i lang="en">issue</i> con errores e ideas. <a href="/licencia/">Ver la licencia</a>.</p>
+    </section>
+
+    <section class="cta">
+      <h2>Pruébalo en tu equipo</h2>
+      <p>Instalación con un comando en macOS o Linux (comprueba la suma de verificación de la descarga):</p>
+      <Cmd cmd={INSTALL_CMD} label="Comando de instalación" />
+      <div class="actions"><a class="btn primary" href="/instalar/">Todas las formas de instalar</a><a class="btn secondary" href={MACOS_DMG}>Descargar Kiwu.dmg</a></div>
+    </section>
+  </div>
+</Base>

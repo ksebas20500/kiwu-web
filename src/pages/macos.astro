@@ -1,0 +1,39 @@
+---
+import Page from '../layouts/Page.astro';
+import Cmd from '../components/Cmd.astro';
+import Shot from '../components/Shot.astro';
+import wDeberes from '../assets/widgets_deberes.png';
+import { MACOS_DMG, MACOS_RELEASE, RELEASES, REPO, RAW } from '../site';
+---
+<Page title="Kiwu para macOS: requisitos, widgets e instalación" h1="Kiwu para macOS"
+  description="Requisitos de Kiwu para macOS 13 o superior, widgets en macOS 14+, instalador universal .dmg y cómo abrir la app, que no está notarizada por Apple."
+  lead="App nativa de macOS hecha con SwiftUI, Core Data y WidgetKit. Versión actual: 2.0.">
+  <h2>Requisitos</h2>
+  <ul>
+    <li>macOS 13 (Ventura) o superior para la app.</li>
+    <li>macOS 14 (Sonoma) o superior para los widgets.</li>
+    <li>Instalador universal: Apple Silicon e Intel. El archivo publicado pesa unos 3,5 MB.</li>
+  </ul>
+  <h2>Descargar e instalar</h2>
+  <p><a class="btn primary" href={MACOS_DMG}>Descargar Kiwu.dmg</a></p>
+  <p class="small">El enlace apunta al archivo <code>Kiwu.dmg</code> de la versión más reciente publicada para macOS en <a href={RELEASES} rel="noopener">GitHub Releases</a>. Página de la versión actual: <a href={MACOS_RELEASE} rel="noopener">v2.0.0</a> (con el <code>.sha256</code>).</p>
+  <h3>Opción 1: un comando</h3>
+  <p>Descarga el <code>.dmg</code>, comprueba su suma de verificación, copia la app a Aplicaciones y quita la marca de cuarentena:</p>
+  <Cmd cmd={`curl -fsSL ${RAW}/macos/install.sh | bash`} label="Instalar Kiwu en macOS desde la terminal" />
+  <h3>Opción 2: a mano</h3>
+  <p>Abre <code>Kiwu.dmg</code> y arrastra <strong>Kiwu</strong> a <em>Aplicaciones</em>.</p>
+  <div class="notice" role="note">
+    <p><strong>La app no está notarizada por Apple.</strong> Notarizar requiere una cuenta de pago, así que al abrirla por primera vez macOS avisará de que no puede verificar al desarrollador (Gatekeeper). Para abrirla:</p>
+    <ul>
+      <li><em>Ajustes del Sistema → Privacidad y seguridad → Abrir igualmente</em>, o</li>
+      <li>en la Terminal: <code>xattr -dr com.apple.quarantine /Applications/Kiwu.app</code></li>
+    </ul>
+    <p>El instalador por terminal ya hace esto por ti. Si prefieres no fiarte de un binario, puedes <a href={`${REPO}/blob/main/macos/README.md`} rel="noopener">compilarlo tú mismo</a> (necesita Xcode y firmar con tu propio equipo de desarrollo).</p>
+  </div>
+  <h2>Widgets</h2>
+  <p>En macOS 14 o superior hay tres widgets: <em>Deberes</em> (se completan desde el widget), <em>Nota rápida</em> y <em>Calendario de deberes</em>. Se añaden con clic derecho en el escritorio → <em>Editar widgets</em> → <em>Kiwu</em>; abre la app al menos una vez para que publique los datos.</p>
+  <figure><Shot src={wDeberes} alt="Widget Deberes de Kiwu con tareas que se pueden completar desde el escritorio" sizes="(min-width: 640px) 480px, 100vw" /></figure>
+  <h2>¿Vienes de TaskFlow?</h2>
+  <p>Kiwu se llamaba TaskFlow en la versión 1.x. Al instalar Kiwu se sustituye la app antigua y, al abrirla, se copian tus listas, tareas, notas y fondo a la nueva carpeta de datos; la carpeta antigua no se borra. Si usabas widgets, quítalos y vuelve a añadirlos.</p>
+  <p>Siguiente: <a href="/instalar/">todas las formas de instalar</a> · <a href="/preguntas-frecuentes/">preguntas frecuentes</a>. ¿Usas Linux? Mira <a href="/linux/">Kiwu para Linux</a>.</p>
+</Page>

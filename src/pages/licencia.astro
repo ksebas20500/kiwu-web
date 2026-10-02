@@ -1,0 +1,12 @@
+---
+import Page from '../layouts/Page.astro';
+import { REPO } from '../site';
+import text from '../assets/LICENSE.txt?raw';
+---
+<Page title="Licencia MIT de Kiwu" h1="Licencia"
+  description="Kiwu es software libre distribuido bajo la licencia MIT. Texto completo y autoría."
+  lead="Kiwu se distribuye bajo la licencia MIT. Autor y mantenedor: Kevin Sebastián Medina Nava.">
+  <p>Puedes consultar el código en <a href={REPO} rel="noopener">GitHub</a>. Texto de la licencia, tal como aparece en el repositorio:</p>
+  <pre style="white-space: pre-wrap" tabindex="0">{text}</pre>
+  <p class="small">Kiwu se desarrolló con ayuda de Claude Code (Anthropic) como asistente de programación, según los créditos del repositorio.</p>
+</Page>

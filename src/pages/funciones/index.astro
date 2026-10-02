@@ -1,0 +1,26 @@
+---
+import Page from '../../layouts/Page.astro';
+import Shot from '../../components/Shot.astro';
+import ajustes from '../../assets/ajustes.png';
+---
+<Page title="Funciones de Kiwu: tareas, tablero, calendario y notas" h1="Funciones de Kiwu"
+  description="Resumen de lo que incluye Kiwu: tareas por materia en lista o tablero, calendario mensual, notas por bloques, archivos por lista, ajustes de apariencia y widgets en macOS."
+  lead="Un conjunto pequeño de herramientas pensado para el trabajo académico, con las mismas ideas en macOS y Linux.">
+  <ul class="cards">
+    <li class="card"><h2>Tareas y tablero</h2><p>Listas por materia, fechas y horas, recordatorios y vistas <em>Hoy</em> / <em>Próximos 7 días</em>.</p><p><a href="/funciones/tareas-y-tablero/">Más sobre tareas y tablero</a></p></li>
+    <li class="card"><h2>Calendario</h2><p>El mes completo con tus entregas; doble clic en un día para ampliarlo.</p><p><a href="/funciones/calendario/">Más sobre el calendario</a></p></li>
+    <li class="card"><h2>Notas</h2><p>Editor por bloques con menú <code>/</code>, formato, código con colores y enlaces con vista previa.</p><p><a href="/funciones/notas/">Más sobre las notas</a></p></li>
+  </ul>
+  <h2>Otras funciones</h2>
+  <ul>
+    <li><strong>Archivos:</strong> vincula una carpeta de tu equipo a cada lista y explórala dentro de Kiwu; adjunta PDF o Word a las notas como referencia, sin duplicarlos.</li>
+    <li><strong>Ajustes:</strong> atajos de teclado editables, tema claro u oscuro y fondo de imagen con translucidez ajustable.</li>
+    <li><strong>Widgets (solo macOS 14+):</strong> <em>Deberes</em>, <em>Nota rápida</em> y <em>Calendario de deberes</em>. En Linux no hay widgets por ahora.</li>
+    <li><strong>Privacidad:</strong> todo es local. <a href="/privacidad/">Detalles y excepciones</a>.</li>
+  </ul>
+  <figure>
+    <Shot src={ajustes} alt="Pantalla de ajustes de Kiwu, sección Apariencia" />
+    <figcaption>Ajustes de apariencia en Kiwu.</figcaption>
+  </figure>
+  <p>¿Dudas sobre tu sistema? Consulta <a href="/macos/">macOS</a>, <a href="/linux/">Linux</a> o las <a href="/preguntas-frecuentes/">preguntas frecuentes</a>.</p>
+</Page>

@@ -1,0 +1,20 @@
+---
+import Page from '../layouts/Page.astro';
+---
+<Page title="Privacidad de Kiwu y de este sitio" h1="Privacidad"
+  description="Kiwu guarda tus datos en tu equipo, sin cuentas, publicidad ni analíticas. Cuándo se conecta a Internet (vistas previas de enlaces y vídeos) y qué recoge este sitio web."
+  lead="Kiwu no tiene servidor, cuentas, publicidad ni analíticas. Aquí está lo que hace y lo que no.">
+  <h2>La aplicación</h2>
+  <ul>
+    <li>Tus tareas, notas y ajustes se guardan localmente: en macOS en <code>~/Library/Application Support/Kiwu</code> y en Linux en <code>~/.local/share/kiwu</code> y <code>~/.config/kiwu</code>.</li>
+    <li>No hay cuentas, servidor propio, publicidad ni analíticas.</li>
+    <li>En macOS, los widgets leen una copia de los deberes y notas recientes desde una carpeta compartida con la app (un App Group en compilaciones firmadas desde Xcode, o una carpeta autorizada en el instalador <code>.dmg</code>).</li>
+    <li>El proyecto de macOS incluye un manifiesto de privacidad de Apple que declara que no hay seguimiento ni datos recopilados.</li>
+  </ul>
+  <h2>Cuándo se conecta a Internet</h2>
+  <p>Solo cuando pegas un enlace en una nota: Kiwu descarga la vista previa (título, descripción e imagen) de esa página o reproduce un vídeo de YouTube o Vimeo. Esas conexiones van a los sitios de esos enlaces, que tienen sus propias políticas. Kiwu no envía tus datos. En Linux, el vídeo incrustado requiere WebKitGTK; sin él, los vídeos se abren en el navegador.</p>
+  <p>Instalar o descargar la app también implica conexión a GitHub.</p>
+  <h2>Este sitio web</h2>
+  <p>Este sitio es estático e informativo: no tiene cuentas, formularios, cookies propias ni herramientas de analítica. Los enlaces de descarga y el código llevan a GitHub, que es un servicio independiente. El sitio se aloja en Firebase Hosting (Google), que puede registrar datos técnicos de las visitas como cualquier servidor web.</p>
+  <p>Más información: <a href="/preguntas-frecuentes/">preguntas frecuentes</a> · <a href="/licencia/">licencia</a>.</p>
+</Page>

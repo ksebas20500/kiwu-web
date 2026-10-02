@@ -1,0 +1,19 @@
+---
+import Page from '../../layouts/Page.astro';
+import Shot from '../../components/Shot.astro';
+import portada from '../../assets/portada.png';
+import tablero from '../../assets/tablero.png';
+---
+<Page title="Tareas y tablero para estudiantes" h1="Tareas y tablero"
+  description="Organiza tus deberes por materia en Kiwu: fechas y horas, recordatorios locales, vistas Hoy y Próximos 7 días, y un tablero Por hacer, En curso y Hecho con arrastrar y soltar."
+  lead="Kiwu ordena tus deberes por materia y te deja verlos como lista o como tablero.">
+  <h2>Listas por materia</h2>
+  <p>Crea una lista por materia y añade deberes con fecha y hora. Las vistas <em>Hoy</em>, <em>Próximos 7 días</em>, <em>Todas las tareas</em> y <em>Completadas</em> te muestran lo que toca sin revisar cada lista.</p>
+  <figure><Shot src={portada} alt="Kiwu en modo lista con la barra lateral de vistas (Hoy, Próximos 7 días, Calendario, Todas las tareas) y la lista Universidad" /><figcaption>Modo lista, con las vistas en la barra lateral.</figcaption></figure>
+  <h2>Tablero</h2>
+  <p>Cambia a tablero con las tres columnas <em>Por hacer</em>, <em>En curso</em> y <em>Hecho</em> y arrastra las tareas entre ellas.</p>
+  <figure><Shot src={tablero} alt="Kiwu en modo tablero con tareas en la columna Por hacer" /><figcaption>Modo tablero.</figcaption></figure>
+  <h2>Recordatorios</h2>
+  <p>Los recordatorios son locales: en macOS usan las notificaciones del sistema y en Linux las notificaciones del escritorio (necesitas un demonio de notificaciones como mako). En Linux solo salen si Kiwu está en marcha; hay un modo sin ventana (<code>kiwu --segundo-plano</code>). Ver <a href="/linux/">Kiwu en Linux</a>.</p>
+  <p>Siguiente: <a href="/funciones/calendario/">el calendario</a> y <a href="/funciones/notas/">las notas</a>.</p>
+</Page>
