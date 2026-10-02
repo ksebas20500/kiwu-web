@@ -4,7 +4,7 @@ import { join } from 'node:path';
 const dist = 'dist';
 const errs = [];
 const pages = [];
-(function walk(d) { for (const f of readdirSync(d)) { const p = join(d, f); statSync(p).isDirectory() ? walk(p) : p.endsWith('.html') && pages.push(p); } })(dist);
+(function walk(d) { for (const f of readdirSync(d)) { const p = join(d, f); statSync(p).isDirectory() ? walk(p) : p.endsWith('.html') && !/^google[0-9a-f]+\.html$/.test(f) && pages.push(p); } })(dist);
 const urlOf = (p) => '/' + p.slice(dist.length + 1).replace(/index\.html$/, '').replace(/404\.html$/, '404.html');
 const known = new Set(pages.map(urlOf));
 const titles = new Map(), descs = new Map();
