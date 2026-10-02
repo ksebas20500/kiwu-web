@@ -1,0 +1,26 @@
+---
+import Page from '../layouts/Page.astro';
+import Shot from '../components/Shot.astro';
+import tablero from '../assets/tablero.png';
+import notas from '../assets/notas.png';
+---
+<Page title="App de tareas para estudiantes universitarios: cómo organizar el semestre" h1="Una app de tareas para estudiantes: cómo organizar tu semestre con Kiwu"
+  description="Guía práctica para organizar deberes, entregas y apuntes del semestre con Kiwu, una app de tareas de escritorio para estudiantes en macOS y Linux, con tus datos en tu equipo."
+  lead="Kiwu no impone un método, pero sus piezas encajan bien con el ritmo de un semestre: una lista por materia, un tablero para lo que está en curso, un calendario de entregas y notas de clase.">
+  <h2>1. Una lista por materia</h2>
+  <p>Crea una lista para cada asignatura (por ejemplo, <em>Cálculo</em>, <em>Software</em>, <em>Fundamentos</em>) y añade cada deber con su fecha y hora. Así ves todo lo de una materia en un sitio, y las vistas <em>Hoy</em> y <em>Próximos 7 días</em> reúnen lo urgente de todas ellas. Más en <a href="/funciones/tareas-y-tablero/">tareas y tablero</a>.</p>
+  <h2>2. Un tablero para lo que está en marcha</h2>
+  <p>Cuando se acumulan proyectos y quizzes, pasa a la vista de tablero: <em>Por hacer</em>, <em>En curso</em> y <em>Hecho</em>. Arrastra cada tarea cuando avanzas; es una forma visual de ver qué tienes a medias.</p>
+  <figure><Shot src={tablero} alt="Kiwu en modo tablero con tareas de varias materias en la columna Por hacer" /></figure>
+  <h2>3. El calendario para ver la semana de entregas</h2>
+  <p>El <a href="/funciones/calendario/">calendario mensual</a> usa las fechas de tus tareas, así que no tienes que apuntar nada dos veces. Sirve para detectar semanas con muchas entregas antes de que lleguen.</p>
+  <h2>4. Notas de clase junto a tus tareas</h2>
+  <p>Escribe apuntes en cuadernos y páginas con el <a href="/funciones/notas/">editor por bloques</a>: títulos, listas, bloques de código con colores si estudias programación, y enlaces con vista previa. Puedes adjuntar el PDF de la guía como referencia y vincular a cada lista la carpeta de tu equipo donde guardas los archivos de esa materia.</p>
+  <figure><Shot src={notas} alt="Editor de notas de Kiwu con el menú de bloques abierto" /></figure>
+  <h2>Qué conviene saber</h2>
+  <ul>
+    <li>Funciona en <a href="/macos/">macOS</a> (13 o superior, widgets en 14+) y en <a href="/linux/">Linux</a> (primera versión, experimental).</li>
+    <li>Tus datos están en tu equipo y no se sincronizan entre dispositivos. Lee <a href="/sin-nube/">qué implica usar un organizador sin nube</a>.</li>
+  </ul>
+  <p class="actions"><a class="btn primary" href="/instalar/">Instalar Kiwu</a></p>
+</Page>

@@ -11,6 +11,7 @@ export const INSTALL_CMD = `curl -fsSL ${RAW}/install.sh | bash`;
 export const SITE_URL_SET = Boolean(process.env.SITE_URL);
 export const nav = [
   { href: '/funciones/', label: 'Funciones' },
+  { href: '/para-estudiantes/', label: 'Para estudiantes' },
   { href: '/macos/', label: 'macOS' },
   { href: '/linux/', label: 'Linux' },
   { href: '/instalar/', label: 'Instalar' },
