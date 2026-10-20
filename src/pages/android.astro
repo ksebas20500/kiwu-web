@@ -1,0 +1,50 @@
+---
+import Page from '../layouts/Page.astro';
+import { ANDROID_APK, ANDROID_RELEASE, ANDROID_SUMS, RELEASES, REPO, ISSUES } from '../site';
+---
+<Page title="Kiwu para Android: requisitos, instalación y estado" h1="Kiwu para Android"
+  description="Kiwu para Android 0.1.0 (versión de prueba): requisitos de Android 8 o superior, instalación del APK, horario semanal, recordatorios y limitaciones actuales."
+  lead="App nativa de Android hecha con Kotlin y Jetpack Compose. Tiene las mismas funciones que la de escritorio (sin widgets) y añade un horario semanal.">
+  <div class="notice" role="note">
+    <p><strong>Estado: versión de prueba (0.1.0).</strong> Todavía no está en Google Play y el nombre y el identificador de la app son provisionales. El release está publicado como <i lang="en">pre-release</i>. Si algo falla, avísanos en <a href={ISSUES} rel="noopener">GitHub</a>.</p>
+  </div>
+  <h2>Requisitos</h2>
+  <ul>
+    <li>Android 8.0 (API 26) o superior.</li>
+    <li>Permiso de notificaciones para los recordatorios y, en Android 12 o superior, «Alarmas exactas» (Ajustes → Recordatorios) para que los avisos suenen a la hora exacta.</li>
+  </ul>
+  <h2>Descargar e instalar</h2>
+  <p><a class="btn primary" href={ANDROID_APK}>Descargar kiwu-android-0.1.0.apk</a></p>
+  <p class="small">Versión optimizada (unos 2 MB). Página de la versión: <a href={ANDROID_RELEASE} rel="noopener">android-v0.1.0</a>. Todas las versiones: <a href={RELEASES} rel="noopener">GitHub Releases</a>.</p>
+  <ol>
+    <li>Descarga el APK en el teléfono y ábrelo.</li>
+    <li>Android pedirá permiso para «instalar apps de fuentes desconocidas» a tu navegador o gestor de archivos; concédelo.</li>
+    <li>Al abrir Kiwu, acepta las notificaciones si quieres recordatorios.</li>
+    <li>Opcional: comprueba la descarga con <a href={ANDROID_SUMS}><code>SHA256SUMS.txt</code></a> (<code>sha256sum -c SHA256SUMS.txt</code> en Linux/macOS o <code>Get-FileHash</code> en PowerShell).</li>
+  </ol>
+  <div class="notice" role="note">
+    <p><strong>Haz una copia antes de cambiar de APK.</strong> Los APK van firmados con la clave de depuración. Uno compilado en otro equipo no se instala encima de este sin desinstalar antes, y al desinstalar se pierden los datos. Exporta una copia desde <em>Ajustes → Exportar</em>.</p>
+  </div>
+  <p class="small">El release incluye también una versión de depuración (<code>-debug.apk</code>, unos 18 MB), más lenta y pensada solo para diagnosticar fallos. Se puede instalar a la vez, pero no comparte datos con la optimizada.</p>
+  <h2>Qué incluye</h2>
+  <ul>
+    <li><strong>Tareas:</strong> listas por materia, fecha y hora de entrega, vistas Hoy, Próximos 7 días, Todas y Completadas, y tablero (Por hacer · En curso · Hecho) en pantallas anchas.</li>
+    <li><strong>Calendario:</strong> mes completo con las entregas como puntos de colores y el detalle del día debajo.</li>
+    <li><strong>Notas:</strong> cuadernos, páginas, favoritas y búsqueda; editor por bloques con menú «/», formato en línea, enlaces con vista previa, vídeo, imágenes y archivos adjuntos.</li>
+    <li><strong>Horario:</strong> varios horarios, clases en varios días, vista de día o de semana, tarjeta «Ahora / Siguiente», aviso de choques y avisos opcionales antes de cada clase.</li>
+    <li><strong>Archivos por lista:</strong> una carpeta del dispositivo vinculada a cada lista; los archivos no se copian.</li>
+    <li><strong>Recordatorios:</strong> notificaciones con «Completar» y «Posponer 1 h»; se reprograman al reiniciar el teléfono.</li>
+    <li><strong>Ajustes:</strong> tema claro, oscuro o del sistema, color de la app a elección y fondo de imagen.</li>
+  </ul>
+  <h2>Tus datos</h2>
+  <p>Todo se guarda solo en el dispositivo: sin cuentas, servidor, publicidad ni analíticas. Internet se usa únicamente para descargar la vista previa de los enlaces que pegas en una nota. La copia de seguridad <code>.kiwu.json</code> tiene el mismo formato que en macOS y Linux, así que puedes mover tus datos entre sistemas. Más en <a href="/sin-nube/">sin nube</a> y <a href="/privacidad/">privacidad</a>.</p>
+  <h2>Limitaciones conocidas</h2>
+  <ul>
+    <li>Sin sincronización entre dispositivos todavía (está planificada).</li>
+    <li>Sin widgets.</li>
+    <li>El tablero no se ofrece en teléfonos, solo en pantallas anchas.</li>
+    <li>Sin probar en un dispositivo: avisos tras reiniciar, vista semanal en tabletas, adjuntos, vista previa de enlaces y vídeo, y TalkBack.</li>
+    <li>La app está solo en español.</li>
+  </ul>
+  <p>Siguiente: <a href="/instalar/">todas las formas de instalar</a> · <a href="/preguntas-frecuentes/">preguntas frecuentes</a> · <a href={REPO} rel="noopener">código en GitHub</a>.</p>
+</Page>
