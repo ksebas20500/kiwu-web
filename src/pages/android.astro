@@ -3,7 +3,7 @@ import Page from '../layouts/Page.astro';
 import { ANDROID_APK, ANDROID_RELEASE, ANDROID_SUMS, RELEASES, REPO, ISSUES } from '../site';
 ---
 <Page title="Kiwu para Android: requisitos, instalación y estado" h1="Kiwu para Android"
-  description="Kiwu para Android 0.1.0 (versión de prueba): requisitos de Android 8 o superior, instalación del APK, horario semanal, recordatorios y limitaciones actuales."
+  description="Kiwu para Android 0.1.0 (versión de prueba): requisitos de Android 8 o superior, instalación del APK, horario semanal, recordatorios y próximas mejoras."
   lead="App nativa de Android hecha con Kotlin y Jetpack Compose. Tiene las mismas funciones que la de escritorio (sin widgets) y añade un horario semanal.">
   <div class="notice" role="note">
     <p><strong>Estado: versión de prueba (0.1.0).</strong> Todavía no está en Google Play y el nombre y el identificador de la app son provisionales. El release está publicado como <i lang="en">pre-release</i>. Si algo falla, avísanos en <a href={ISSUES} rel="noopener">GitHub</a>.</p>
@@ -38,12 +38,11 @@ import { ANDROID_APK, ANDROID_RELEASE, ANDROID_SUMS, RELEASES, REPO, ISSUES } fr
   </ul>
   <h2>Tus datos</h2>
   <p>Todo se guarda solo en el dispositivo: sin cuentas, servidor, publicidad ni analíticas. Internet se usa únicamente para descargar la vista previa de los enlaces que pegas en una nota. La copia de seguridad <code>.kiwu.json</code> tiene el mismo formato que en macOS y Linux, así que puedes mover tus datos entre sistemas. Más en <a href="/sin-nube/">sin nube</a> y <a href="/privacidad/">privacidad</a>.</p>
-  <h2>Limitaciones conocidas</h2>
+  <h2>Qué viene después</h2>
   <ul>
     <li>Sin sincronización entre dispositivos todavía (está planificada).</li>
     <li>Sin widgets.</li>
-    <li>El tablero no se ofrece en teléfonos, solo en pantallas anchas.</li>
-    <li>Sin probar en un dispositivo: avisos tras reiniciar, vista semanal en tabletas, adjuntos, vista previa de enlaces y vídeo, y TalkBack.</li>
+    <li>El tablero todavía no está en la versión móvil.</li>
     <li>La app está solo en español.</li>
   </ul>
   <p>Siguiente: <a href="/instalar/">todas las formas de instalar</a> · <a href="/preguntas-frecuentes/">preguntas frecuentes</a> · <a href={REPO} rel="noopener">código en GitHub</a>.</p>
