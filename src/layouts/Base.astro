@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { nav, REPO, SITE_URL_SET } from '../site';
+import { nav, REPO, SITE_URL_SET, TESTER_FORM } from '../site';
 interface Props { title: string; description: string; jsonLd?: object[]; noindex?: boolean; ogType?: string }
 const { title, description, jsonLd = [], noindex = false, ogType = 'website' } = Astro.props;
 const path = Astro.url.pathname;
@@ -46,11 +46,11 @@ const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
         </a>
         <div class="tools">
           <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar entre modo claro y oscuro" title="Cambiar tema"><span aria-hidden="true">◐</span></button>
-          <a class="btn primary cta-top" href="/instalar/">Instalar</a>
+          <a class="btn primary cta-top" href={TESTER_FORM} rel="noopener">Ser tester</a>
         </div>
         <nav aria-label="Principal" class="mainnav">
           <ul>
-            {nav.filter((n) => n.href !== '/instalar/').map((n) => (
+            {nav.map((n) => (
               <li><a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a></li>
             ))}
           </ul>
@@ -62,7 +62,7 @@ const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
       <div class="wrap foot">
         <div>
           <strong>Kiwu</strong>
-          <p>Tareas, calendario y apuntes para estudiantes, en macOS, Linux y Android. Software libre bajo licencia MIT.</p>
+          <p>Tareas, calendario, horario y apuntes para estudiantes, en Android, macOS y Linux. Software libre bajo licencia MIT.</p>
         </div>
         <nav aria-label="Pie de página">
           <ul>

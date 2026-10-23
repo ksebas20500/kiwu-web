@@ -7,14 +7,25 @@ import notas from '../assets/android/notas.png';
 import horarioDia from '../assets/android/horario-dia.png';
 import horarioSemana from '../assets/android/horario-semana.png';
 import ajustes from '../assets/android/ajustes.png';
-import { ANDROID_APK, ANDROID_RELEASE, ANDROID_SUMS, RELEASES, REPO, ISSUES } from '../site';
+import { TESTER_FORM, ANDROID_APK, ANDROID_RELEASE, ANDROID_SUMS, RELEASES, REPO, ISSUES } from '../site';
 ---
 <Page title="Kiwu para Android: requisitos, instalación y estado" h1="Kiwu para Android"
   description="Kiwu para Android 0.1.0 (versión de prueba): requisitos de Android 8 o superior, instalación del APK, horario semanal, recordatorios y próximas mejoras."
   lead="App nativa de Android hecha con Kotlin y Jetpack Compose. Tiene las mismas funciones que la de escritorio (sin widgets) y añade un horario semanal.">
   <div class="notice" role="note">
-    <p><strong>Estado: versión de prueba (0.1.0).</strong> Todavía no está en Google Play y el nombre y el identificador de la app son provisionales. El release está publicado como <i lang="en">pre-release</i>. Si algo falla, avísanos en <a href={ISSUES} rel="noopener">GitHub</a>.</p>
+    <p><strong>Estado: versión de prueba (0.1.0).</strong> Está en preparación para Google Play (prueba cerrada) y el nombre y el identificador de la app son provisionales. El release está publicado como <i lang="en">pre-release</i>. Si algo falla, avísanos en <a href={ISSUES} rel="noopener">GitHub</a>.</p>
   </div>
+  <section class="cta" id="tester">
+    <h2>Prueba cerrada en Google Play</h2>
+    <p>Deja tu correo y te damos acceso como tester para instalar Kiwu desde Google Play y recibir las actualizaciones automáticamente.</p>
+    <ol class="steps" style="text-align:left;max-width:34rem;margin-inline:auto">
+      <li>Rellena el formulario con el correo de tu <strong>cuenta de Google</strong> (la que usas en Play Store).</li>
+      <li>Te añadimos a la lista de testers y te avisamos.</li>
+      <li>Abre el enlace de la prueba, acepta la invitación e instala Kiwu desde Google Play.</li>
+    </ol>
+    <div class="actions"><a class="btn primary" href={TESTER_FORM} rel="noopener">Quiero ser tester</a></div>
+    <p class="small">Tu correo solo se usa para la invitación a la prueba y se guarda en Google Forms. ¿Prefieres no esperar? Abajo tienes el APK.</p>
+  </section>
   <div class="gallery">
     <figure><Shot src={tareas} sizes="240px" alt="Kiwu en Android: lista de tareas por materia" /><figcaption>Tareas</figcaption></figure>
     <figure><Shot src={calendario} sizes="240px" alt="Kiwu en Android: calendario mensual con entregas" /><figcaption>Calendario</figcaption></figure>
