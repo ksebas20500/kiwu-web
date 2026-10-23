@@ -21,7 +21,9 @@ const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="theme-color" content="#fbf4ee" />
+    <meta name="theme-color" content="#f6f5ff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#12111f" media="(prefers-color-scheme: dark)" />
+    <script is:inline>try{var t=localStorage.getItem('kiwu-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
     <meta property="og:site_name" content="Kiwu" />
     <meta property="og:type" content={ogType} />
     <meta property="og:locale" content="es_ES" />
@@ -31,7 +33,7 @@ const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Icono de Kiwu junto a una captura de la app en modo tablero" />
+    <meta property="og:image:alt" content="Kiwu, el gato mago, sobre un degradado violeta y azul" />
     <meta name="twitter:card" content="summary_large_image" />
     {jsonLd.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
   </head>
@@ -42,7 +44,10 @@ const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
         <a class="brand" href="/" aria-label="Kiwu, inicio">
           <img src="/icono-256.png" width="32" height="32" alt="" /> <span>Kiwu</span>
         </a>
-        <a class="btn primary cta-top" href="/instalar/">Instalar</a>
+        <div class="tools">
+          <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar entre modo claro y oscuro" title="Cambiar tema"><span aria-hidden="true">◐</span></button>
+          <a class="btn primary cta-top" href="/instalar/">Instalar</a>
+        </div>
         <nav aria-label="Principal" class="mainnav">
           <ul>
             {nav.filter((n) => n.href !== '/instalar/').map((n) => (
@@ -57,7 +62,7 @@ const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
       <div class="wrap foot">
         <div>
           <strong>Kiwu</strong>
-          <p>Tareas, calendario y apuntes para estudiantes, en macOS y Linux. Software libre bajo licencia MIT.</p>
+          <p>Tareas, calendario y apuntes para estudiantes, en macOS, Linux y Android. Software libre bajo licencia MIT.</p>
         </div>
         <nav aria-label="Pie de página">
           <ul>
@@ -72,6 +77,13 @@ const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
     </footer>
   <script is:inline>
 (function () {
+  var btn = document.getElementById('theme-toggle'), root = document.documentElement;
+  function isDark() { var t = root.dataset.theme; return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  btn.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('kiwu-theme', next); } catch (e) {}
+  });
   var cur = document.querySelector('.mainnav [aria-current]');
   if (cur && cur.scrollIntoView) { var ul = cur.closest('ul'); ul.scrollLeft = cur.offsetLeft - 16; }
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

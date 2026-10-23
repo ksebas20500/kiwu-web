@@ -1,5 +1,12 @@
 ---
 import Page from '../layouts/Page.astro';
+import Shot from '../components/Shot.astro';
+import tareas from '../assets/android/tareas.png';
+import calendario from '../assets/android/calendario.png';
+import notas from '../assets/android/notas.png';
+import horarioDia from '../assets/android/horario-dia.png';
+import horarioSemana from '../assets/android/horario-semana.png';
+import ajustes from '../assets/android/ajustes.png';
 import { ANDROID_APK, ANDROID_RELEASE, ANDROID_SUMS, RELEASES, REPO, ISSUES } from '../site';
 ---
 <Page title="Kiwu para Android: requisitos, instalación y estado" h1="Kiwu para Android"
@@ -7,6 +14,14 @@ import { ANDROID_APK, ANDROID_RELEASE, ANDROID_SUMS, RELEASES, REPO, ISSUES } fr
   lead="App nativa de Android hecha con Kotlin y Jetpack Compose. Tiene las mismas funciones que la de escritorio (sin widgets) y añade un horario semanal.">
   <div class="notice" role="note">
     <p><strong>Estado: versión de prueba (0.1.0).</strong> Todavía no está en Google Play y el nombre y el identificador de la app son provisionales. El release está publicado como <i lang="en">pre-release</i>. Si algo falla, avísanos en <a href={ISSUES} rel="noopener">GitHub</a>.</p>
+  </div>
+  <div class="gallery">
+    <figure><Shot src={tareas} sizes="240px" alt="Kiwu en Android: lista de tareas por materia" /><figcaption>Tareas</figcaption></figure>
+    <figure><Shot src={calendario} sizes="240px" alt="Kiwu en Android: calendario mensual con entregas" /><figcaption>Calendario</figcaption></figure>
+    <figure><Shot src={notas} sizes="240px" alt="Kiwu en Android: editor de notas por bloques" /><figcaption>Notas</figcaption></figure>
+    <figure><Shot src={horarioDia} sizes="240px" alt="Kiwu en Android: horario en vista de día" /><figcaption>Horario (día)</figcaption></figure>
+    <figure><Shot src={horarioSemana} sizes="240px" alt="Kiwu en Android: horario en vista de semana" /><figcaption>Horario (semana)</figcaption></figure>
+    <figure><Shot src={ajustes} sizes="240px" alt="Kiwu en Android: ajustes de tema y color" /><figcaption>Ajustes</figcaption></figure>
   </div>
   <h2>Requisitos</h2>
   <ul>

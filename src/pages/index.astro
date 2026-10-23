@@ -4,6 +4,7 @@ import Shot from '../components/Shot.astro';
 import Cmd from '../components/Cmd.astro';
 import { MACOS_DMG, REPO, INSTALL_CMD } from '../site';
 import tableroCustom from '../assets/tablero_custom.png';
+import banner from '../assets/vista-previa.png';
 import tablero from '../assets/tablero.png';
 import calendario from '../assets/calendario.png';
 import notas from '../assets/notas.png';
@@ -32,8 +33,9 @@ const jsonLd = [
           <a class="btn primary" href="/macos/">Descargar para macOS</a>
           <a class="btn secondary" href="/linux/">Instalar en Linux</a>
         </div>
-        <p class="small">macOS 13 o superior (widgets en macOS 14+) · Linux en versión 0.1.0, aún experimental · Licencia MIT</p>
+        <p class="small">macOS 13 o superior (widgets en macOS 14+) · Linux en versión 0.1.0, aún experimental · <a href="/android/">Android (versión de prueba)</a> · Licencia MIT</p>
       </div>
+      <Shot class="banner" src={banner} eager alt="Kiwu, un gato mago sobre un degradado violeta y azul, con la etiqueta Gratis" />
       <Shot src={tableroCustom} eager alt="Kiwu en modo tablero con tres columnas (Por hacer, En curso y Hecho) y un fondo de imagen translúcido" />
     </section>
 
