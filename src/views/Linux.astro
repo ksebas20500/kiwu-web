@@ -1,0 +1,72 @@
+---
+import Page from '../layouts/Page.astro';
+import Cmd from '../components/Cmd.astro';
+import { RAW } from '../site';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Kiwu para Linux: instalación, dependencias y estado', h1: 'Kiwu para Linux',
+    description: 'Kiwu para Linux 0.1.0 (GTK4 y libadwaita, Python): dependencias en Arch, instalación con un comando o a mano, configuración de Hyprland y limitaciones actuales.',
+    lead: 'Versión de escritorio para Linux hecha con Python, GTK4 y libadwaita. Pensada para Arch Linux con Hyprland (Wayland).',
+    notice: '<strong>Estado: primera versión (0.1.0), experimental.</strong> Según su documentación, se escribió sin poder ejecutarla en Linux. La lógica (datos, importación desde macOS, recordatorios, vistas previas) tiene pruebas automáticas, pero <strong>la interfaz todavía no se había ejecutado sobre GTK real</strong> cuando se redactó. Espera fallos de interfaz, sobre todo en el editor de notas, y repórtalos en <a href="{{ISSUES}}" rel="noopener">GitHub</a>. El release está publicado como <i lang="en">pre-release</i>.',
+    plat: 'Plataforma y limitaciones', platItems: ['Objetivo documentado: Arch Linux + Hyprland, con GTK4 nativo en Wayland. No hay garantía documentada para otras distribuciones o escritorios (el instalador muestra órdenes de dependencias para Fedora y Debian, pero no están probadas según el repositorio).', 'Sin widgets de escritorio.', 'Wayland no permite atajos globales: Kiwu acepta órdenes como <code>kiwu --nueva-tarea</code> que se enlazan en Hyprland.', 'Los recordatorios solo salen si Kiwu está en marcha y hay un demonio de notificaciones.', 'La reproducción de vídeos dentro de las notas es opcional (requiere WebKitGTK 6).'],
+    dep: 'Dependencias (Arch)', depLabel: 'Dependencias obligatorias en Arch', depP: 'Opcionales: <code>webkitgtk-6.0</code> (vídeos en las notas), <code>xdg-desktop-portal-gtk</code> (selector de archivos y tema) y <code>mako</code> o similar (notificaciones).',
+    inst: 'Instalar', o1: 'Opción 1: un comando', o1p: 'Instala en <code>~/.local</code>, sin <code>sudo</code>, comprueba la suma de verificación y crea la entrada en el menú de aplicaciones:', o1label: 'Instalar Kiwu en Linux desde la terminal',
+    o2: 'Opción 2: a mano', o2p: 'Descarga <a href="{{LINUX_TARBALL}}"><code>kiwu-linux.tar.gz</code></a> (versión <a href="{{LINUX_RELEASE}}" rel="noopener">linux-v0.1.0</a>) y su archivo <code>.sha256</code> desde la página del release.', o2label: 'Instalación manual en Linux',
+    unp: 'Para desinstalar: <code>./install.sh --desinstalar</code> (no borra tus datos). También existe un <code>PKGBUILD</code> para Arch y puedes ejecutar desde el código fuente con <code>./run.sh</code> en la carpeta <code>linux</code> del <a href="{{REPO}}" rel="noopener">repositorio</a>.',
+    hy: 'Hyprland', hyp: 'Kiwu es de instancia única. Ejemplo de enlaces en <code>~/.config/hypr/hyprland.conf</code>:', hylabel: 'Ejemplo de configuración de Hyprland',
+    hyp2: 'Hay más opciones (reglas de ventana, desenfoque, NVIDIA y <code>kiwu --diagnostico</code>) en el <a href="{{REPO}}/blob/main/linux/README.md" rel="noopener">README de Linux</a>.',
+    data: 'Tus datos', datap: 'La base de datos se guarda en <code>~/.local/share/kiwu/kiwu.db</code> y los ajustes en <code>~/.config/kiwu/settings.json</code>. Puedes importar tus datos de macOS desde <em>Ajustes → Datos</em>, copiando antes la carpeta <code>~/Library/Application Support/Kiwu</code> del Mac.',
+    see: 'Ver también: <a href="{{install}}">instalar</a> · <a href="{{faq}}">preguntas frecuentes</a> · <a href="{{privacy}}">privacidad</a>.' },
+  en: { title: 'Kiwu for Linux: installation, dependencies and status', h1: 'Kiwu for Linux',
+    description: 'Kiwu for Linux 0.1.0 (GTK4 and libadwaita, Python): Arch dependencies, one-command or manual installation, Hyprland setup and current limitations.',
+    lead: 'Desktop version for Linux built with Python, GTK4 and libadwaita. Designed for Arch Linux with Hyprland (Wayland).',
+    notice: '<strong>Status: first version (0.1.0), experimental.</strong> According to its documentation, it was written without being able to run it on Linux. The logic (data, macOS import, reminders, previews) has automated tests, but <strong>the interface had not yet been run on real GTK</strong> when it was written. Expect interface bugs, especially in the notes editor, and report them on <a href="{{ISSUES}}" rel="noopener">GitHub</a>. The release is published as a <i>pre-release</i>.',
+    plat: 'Platform and limitations', platItems: ['Documented target: Arch Linux + Hyprland, with native GTK4 on Wayland. There is no documented guarantee for other distributions or desktops (the installer shows dependency commands for Fedora and Debian, but they are untested according to the repository).', 'No desktop widgets.', 'Wayland does not allow global shortcuts: Kiwu accepts commands such as <code>kiwu --nueva-tarea</code> that you bind in Hyprland.', 'Reminders only fire if Kiwu is running and there is a notification daemon.', 'Playing videos inside notes is optional (requires WebKitGTK 6).'],
+    dep: 'Dependencies (Arch)', depLabel: 'Required dependencies on Arch', depP: 'Optional: <code>webkitgtk-6.0</code> (videos in notes), <code>xdg-desktop-portal-gtk</code> (file picker and theme) and <code>mako</code> or similar (notifications).',
+    inst: 'Install', o1: 'Option 1: one command', o1p: 'Installs into <code>~/.local</code>, without <code>sudo</code>, verifies the checksum and creates the application menu entry:', o1label: 'Install Kiwu on Linux from the terminal',
+    o2: 'Option 2: by hand', o2p: 'Download <a href="{{LINUX_TARBALL}}"><code>kiwu-linux.tar.gz</code></a> (version <a href="{{LINUX_RELEASE}}" rel="noopener">linux-v0.1.0</a>) and its <code>.sha256</code> file from the release page.', o2label: 'Manual installation on Linux',
+    unp: 'To uninstall: <code>./install.sh --desinstalar</code> (it does not delete your data). There is also a <code>PKGBUILD</code> for Arch, and you can run from source with <code>./run.sh</code> in the <code>linux</code> folder of the <a href="{{REPO}}" rel="noopener">repository</a>.',
+    hy: 'Hyprland', hyp: 'Kiwu is single-instance. Example bindings in <code>~/.config/hypr/hyprland.conf</code>:', hylabel: 'Hyprland configuration example',
+    hyp2: 'There are more options (window rules, blur, NVIDIA and <code>kiwu --diagnostico</code>) in the <a href="{{REPO}}/blob/main/linux/README.md" rel="noopener">Linux README</a>.',
+    data: 'Your data', datap: 'The database is stored in <code>~/.local/share/kiwu/kiwu.db</code> and settings in <code>~/.config/kiwu/settings.json</code>. You can import your macOS data from <em>Settings → Data</em>, after copying the Mac’s <code>~/Library/Application Support/Kiwu</code> folder.',
+    see: 'See also: <a href="{{install}}">install</a> · <a href="{{faq}}">FAQ</a> · <a href="{{privacy}}">privacy</a>.' },
+  pt: { title: 'Kiwu para Linux: instalação, dependências e estado', h1: 'Kiwu para Linux',
+    description: 'Kiwu para Linux 0.1.0 (GTK4 e libadwaita, Python): dependências no Arch, instalação com um comando ou manual, configuração do Hyprland e limitações atuais.',
+    lead: 'Versão desktop para Linux feita com Python, GTK4 e libadwaita. Pensada para Arch Linux com Hyprland (Wayland).',
+    notice: '<strong>Estado: primeira versão (0.1.0), experimental.</strong> Segundo a documentação, foi escrita sem poder ser executada no Linux. A lógica (dados, importação do macOS, lembretes, prévias) tem testes automáticos, mas <strong>a interface ainda não tinha sido executada em um GTK real</strong> quando foi redigida. Espere falhas de interface, principalmente no editor de anotações, e relate-as no <a href="{{ISSUES}}" rel="noopener">GitHub</a>. O release está publicado como <i lang="en">pre-release</i>.',
+    plat: 'Plataforma e limitações', platItems: ['Alvo documentado: Arch Linux + Hyprland, com GTK4 nativo no Wayland. Não há garantia documentada para outras distribuições ou desktops (o instalador mostra comandos de dependências para Fedora e Debian, mas não foram testados segundo o repositório).', 'Sem widgets de desktop.', 'O Wayland não permite atalhos globais: o Kiwu aceita comandos como <code>kiwu --nueva-tarea</code> que você vincula no Hyprland.', 'Os lembretes só aparecem se o Kiwu estiver em execução e houver um daemon de notificações.', 'A reprodução de vídeos dentro das anotações é opcional (requer WebKitGTK 6).'],
+    dep: 'Dependências (Arch)', depLabel: 'Dependências obrigatórias no Arch', depP: 'Opcionais: <code>webkitgtk-6.0</code> (vídeos nas anotações), <code>xdg-desktop-portal-gtk</code> (seletor de arquivos e tema) e <code>mako</code> ou similar (notificações).',
+    inst: 'Instalar', o1: 'Opção 1: um comando', o1p: 'Instala em <code>~/.local</code>, sem <code>sudo</code>, verifica o checksum e cria a entrada no menu de aplicativos:', o1label: 'Instalar o Kiwu no Linux pelo terminal',
+    o2: 'Opção 2: manualmente', o2p: 'Baixe <a href="{{LINUX_TARBALL}}"><code>kiwu-linux.tar.gz</code></a> (versão <a href="{{LINUX_RELEASE}}" rel="noopener">linux-v0.1.0</a>) e o arquivo <code>.sha256</code> na página do release.', o2label: 'Instalação manual no Linux',
+    unp: 'Para desinstalar: <code>./install.sh --desinstalar</code> (não apaga seus dados). Também existe um <code>PKGBUILD</code> para Arch e você pode executar a partir do código-fonte com <code>./run.sh</code> na pasta <code>linux</code> do <a href="{{REPO}}" rel="noopener">repositório</a>.',
+    hy: 'Hyprland', hyp: 'O Kiwu é de instância única. Exemplo de atalhos em <code>~/.config/hypr/hyprland.conf</code>:', hylabel: 'Exemplo de configuração do Hyprland',
+    hyp2: 'Há mais opções (regras de janela, desfoque, NVIDIA e <code>kiwu --diagnostico</code>) no <a href="{{REPO}}/blob/main/linux/README.md" rel="noopener">README do Linux</a>.',
+    data: 'Seus dados', datap: 'O banco de dados fica em <code>~/.local/share/kiwu/kiwu.db</code> e as configurações em <code>~/.config/kiwu/settings.json</code>. Você pode importar seus dados do macOS em <em>Ajustes → Dados</em>, copiando antes a pasta <code>~/Library/Application Support/Kiwu</code> do Mac.',
+    see: 'Veja também: <a href="{{install}}">instalar</a> · <a href="{{faq}}">perguntas frequentes</a> · <a href="{{privacy}}">privacidade</a>.' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <div class="notice" role="note"><p set:html={h(D.notice)} /></div>
+  <h2>{D.plat}</h2>
+  <ul>{D.platItems.map((i) => <li set:html={i} />)}</ul>
+  <h2>{D.dep}</h2>
+  <Cmd lang={lang} cmd="sudo pacman -S python python-gobject gtk4 libadwaita gtksourceview5" label={D.depLabel} />
+  <p set:html={D.depP} />
+  <h2>{D.inst}</h2>
+  <h3>{D.o1}</h3>
+  <p set:html={D.o1p} />
+  <Cmd lang={lang} cmd={`curl -fsSL ${RAW}/linux/install.sh | bash`} label={D.o1label} />
+  <h3>{D.o2}</h3>
+  <p set:html={h(D.o2p)} />
+  <Cmd lang={lang} cmd={`sha256sum -c kiwu-linux.tar.gz.sha256\ntar -xzf kiwu-linux.tar.gz\ncd kiwu-linux-*\n./install.sh`} label={D.o2label} />
+  <p set:html={h(D.unp)} />
+  <h2>{D.hy}</h2>
+  <p set:html={D.hyp} />
+  <Cmd lang={lang} cmd={`bind = SUPER, N, exec, kiwu --nueva-tarea\nbind = SUPER SHIFT, K, exec, kiwu --mostrar\nexec-once = kiwu --segundo-plano`} label={D.hylabel} />
+  <p set:html={h(D.hyp2)} />
+  <h2>{D.data}</h2>
+  <p set:html={D.datap} />
+  <p set:html={h(D.see)} />
+</Page>

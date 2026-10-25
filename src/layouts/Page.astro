@@ -1,12 +1,13 @@
 ---
 import Base from './Base.astro';
-interface Props { title: string; description: string; h1: string; lead?: string; jsonLd?: object[] }
+import type { Lang, Route } from '../i18n';
+interface Props { title: string; description: string; h1: string; lead?: string; lang: Lang; route: Route; jsonLd?: object[] }
 const { h1, lead, ...rest } = Astro.props;
 ---
 <Base {...rest}>
   <div class="wrap prose">
     <h1>{h1}</h1>
-    {lead && <p class="lead">{lead}</p>}
+    {lead && <p class="lead" set:html={lead} />}
     <slot />
   </div>
 </Base>

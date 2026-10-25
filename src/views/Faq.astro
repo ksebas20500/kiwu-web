@@ -1,0 +1,65 @@
+---
+import Page from '../layouts/Page.astro';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Preguntas frecuentes sobre Kiwu', h1: 'Preguntas frecuentes',
+    description: 'Respuestas sobre Kiwu: qué es, sistemas compatibles, cómo ser tester en Android, privacidad y uso de Internet, aviso de macOS por falta de notarización, estado en Linux, widgets y migración desde TaskFlow.',
+    more: 'Más información: <a href="{{android}}">Android</a>, <a href="{{macos}}">macOS</a>, <a href="{{linux}}">Linux</a>, <a href="{{privacy}}">privacidad</a> e <a href="{{install}}">instalación</a>.',
+    faqs: [
+      ['¿Cómo me hago tester de Android?', 'Rellena el formulario de la <a href="{{android}}#tester">página de Android</a> con el correo de tu cuenta de Google. Te añadimos a la prueba cerrada de Google Play y te avisamos para que instales Kiwu desde la tienda.'],
+      ['¿Qué es Kiwu?', 'Una aplicación de código abierto para organizar tareas por materia (en lista o tablero), un calendario de entregas y notas por bloques, para Android, macOS y Linux. En Android añade un horario semanal. Antes se llamaba TaskFlow.'],
+      ['¿Necesito una cuenta o la nube?', 'No. Kiwu no tiene servidor ni cuentas, y guarda tus datos en tu dispositivo.'],
+      ['¿Kiwu usa Internet?', 'Solo cuando pegas un enlace en una nota: entonces descarga su vista previa (título, descripción e imagen) o reproduce un vídeo de YouTube o Vimeo. No envía tus datos. Los instaladores por terminal y los de descarga también usan Internet al instalar.'],
+      ['¿Qué sistemas son compatibles?', 'Android 8 o superior (prueba cerrada en Google Play o APK), macOS 13 o superior (widgets en macOS 14+) y Linux con GTK4 y libadwaita, documentado para Arch Linux con Hyprland. No hay versión para Windows ni iOS.'],
+      ['¿Es gratis y de código abierto?', 'El código se distribuye bajo licencia MIT y está en GitHub; la licencia permite usarlo, copiarlo y modificarlo.'],
+      ['¿Por qué macOS me dice que no puede verificar al desarrollador?', 'Porque la app no está notarizada por Apple (requiere una cuenta de pago). Puedes abrirla desde Ajustes del Sistema → Privacidad y seguridad → Abrir igualmente, o con xattr -dr com.apple.quarantine /Applications/Kiwu.app. El instalador por terminal lo hace por ti.'],
+      ['¿Funciona bien en Linux?', 'Es la primera versión (0.1.0) y su documentación advierte que la interfaz no se había ejecutado sobre GTK real cuando se redactó. Es experimental: espera fallos, sobre todo en el editor de notas, y repórtalos en GitHub.'],
+      ['¿Hay widgets?', 'Sí en macOS 14 o superior (Deberes, Nota rápida y Calendario de deberes). En Android y Linux no hay widgets por ahora.'],
+      ['¿Puedo pasar mis datos de macOS a Linux?', 'Sí: copia la carpeta ~/Library/Application Support/Kiwu al equipo Linux e impórtala en Ajustes → Datos. Los archivos adjuntos no se enlazan solos y aparecen como «Sin vincular».'],
+      ['¿Sincroniza entre dispositivos?', 'No. La sincronización figura como pendiente en la documentación; hoy los datos son locales. Puedes mover tus datos con la copia .kiwu.json.'],
+      ['¿Vengo de TaskFlow, pierdo mis datos?', 'No: al abrir Kiwu por primera vez se copian tus listas, tareas, notas y fondo a la nueva carpeta; la antigua se conserva como copia de seguridad.'],
+    ] },
+  en: { title: 'Kiwu frequently asked questions', h1: 'Frequently asked questions',
+    description: 'Answers about Kiwu: what it is, supported systems, how to become an Android tester, privacy and internet use, the macOS notarization warning, Linux status, widgets and migrating from TaskFlow.',
+    more: 'More information: <a href="{{android}}">Android</a>, <a href="{{macos}}">macOS</a>, <a href="{{linux}}">Linux</a>, <a href="{{privacy}}">privacy</a> and <a href="{{install}}">installation</a>.',
+    faqs: [
+      ['How do I become an Android tester?', 'Fill in the form on the <a href="{{android}}#tester">Android page</a> with the email of your Google account. We add you to the Google Play closed test and let you know so you can install Kiwu from the store.'],
+      ['What is Kiwu?', 'An open-source app to organize tasks by subject (as a list or board), a deadline calendar and block-based notes, for Android, macOS and Linux. On Android it adds a weekly timetable. It used to be called TaskFlow.'],
+      ['Do I need an account or the cloud?', 'No. Kiwu has no server or accounts, and keeps your data on your device.'],
+      ['Does Kiwu use the internet?', 'Only when you paste a link into a note: it then downloads its preview (title, description and image) or plays a YouTube or Vimeo video. It does not send your data. Terminal installers and downloads also use the internet when installing.'],
+      ['Which systems are supported?', 'Android 8 or later (closed test on Google Play or APK), macOS 13 or later (widgets on macOS 14+) and Linux with GTK4 and libadwaita, documented for Arch Linux with Hyprland. There is no version for Windows or iOS.'],
+      ['Is it free and open source?', 'The code is distributed under the MIT license and is on GitHub; the license lets you use, copy and modify it.'],
+      ['Why does macOS say it cannot verify the developer?', 'Because the app is not notarized by Apple (it requires a paid account). You can open it from System Settings → Privacy & Security → Open Anyway, or with xattr -dr com.apple.quarantine /Applications/Kiwu.app. The terminal installer does this for you.'],
+      ['Does it work well on Linux?', 'It is the first version (0.1.0) and its documentation warns that the interface had not been run on real GTK when it was written. It is experimental: expect bugs, especially in the notes editor, and report them on GitHub.'],
+      ['Are there widgets?', 'Yes on macOS 14 or later (Homework, Quick note and Homework calendar). There are no widgets on Android or Linux for now.'],
+      ['Can I move my data from macOS to Linux?', 'Yes: copy the ~/Library/Application Support/Kiwu folder to the Linux computer and import it in Settings → Data. Attachments are not linked automatically and appear as “Unlinked”.'],
+      ['Does it sync between devices?', 'No. Syncing is listed as pending in the documentation; today the data is local. You can move your data with the .kiwu.json backup.'],
+      ['I come from TaskFlow, will I lose my data?', 'No: the first time you open Kiwu your lists, tasks, notes and background are copied to the new folder; the old one is kept as a backup.'],
+    ] },
+  pt: { title: 'Perguntas frequentes sobre o Kiwu', h1: 'Perguntas frequentes',
+    description: 'Respostas sobre o Kiwu: o que é, sistemas compatíveis, como ser testador no Android, privacidade e uso da internet, aviso do macOS por falta de notarização, estado no Linux, widgets e migração do TaskFlow.',
+    more: 'Mais informações: <a href="{{android}}">Android</a>, <a href="{{macos}}">macOS</a>, <a href="{{linux}}">Linux</a>, <a href="{{privacy}}">privacidade</a> e <a href="{{install}}">instalação</a>.',
+    faqs: [
+      ['Como me torno testador no Android?', 'Preencha o formulário da <a href="{{android}}#tester">página do Android</a> com o e-mail da sua conta Google. Adicionamos você ao teste fechado do Google Play e avisamos para que instale o Kiwu pela loja.'],
+      ['O que é o Kiwu?', 'Um aplicativo de código aberto para organizar tarefas por disciplina (em lista ou quadro), um calendário de entregas e anotações em blocos, para Android, macOS e Linux. No Android inclui um horário semanal. Antes se chamava TaskFlow.'],
+      ['Preciso de conta ou de nuvem?', 'Não. O Kiwu não tem servidor nem contas e guarda seus dados no seu dispositivo.'],
+      ['O Kiwu usa a internet?', 'Somente quando você cola um link em uma anotação: então ele baixa a prévia (título, descrição e imagem) ou reproduz um vídeo do YouTube ou Vimeo. Ele não envia seus dados. Os instaladores por terminal e os de download também usam a internet ao instalar.'],
+      ['Quais sistemas são compatíveis?', 'Android 8 ou superior (teste fechado no Google Play ou APK), macOS 13 ou superior (widgets no macOS 14+) e Linux com GTK4 e libadwaita, documentado para Arch Linux com Hyprland. Não há versão para Windows nem iOS.'],
+      ['É gratuito e de código aberto?', 'O código é distribuído sob a licença MIT e está no GitHub; a licença permite usar, copiar e modificar.'],
+      ['Por que o macOS diz que não consegue verificar o desenvolvedor?', 'Porque o app não é notarizado pela Apple (exige uma conta paga). Você pode abri-lo em Ajustes do Sistema → Privacidade e Segurança → Abrir Mesmo Assim, ou com xattr -dr com.apple.quarantine /Applications/Kiwu.app. O instalador por terminal faz isso por você.'],
+      ['Funciona bem no Linux?', 'É a primeira versão (0.1.0) e a documentação avisa que a interface não havia sido executada em um GTK real quando foi escrita. É experimental: espere falhas, principalmente no editor de anotações, e relate-as no GitHub.'],
+      ['Há widgets?', 'Sim, no macOS 14 ou superior (Trabalhos, Nota rápida e Calendário de trabalhos). No Android e no Linux não há widgets por enquanto.'],
+      ['Posso levar meus dados do macOS para o Linux?', 'Sim: copie a pasta ~/Library/Application Support/Kiwu para o computador Linux e importe em Ajustes → Dados. Os anexos não são vinculados sozinhos e aparecem como «Não vinculado».'],
+      ['Sincroniza entre dispositivos?', 'Não. A sincronização consta como pendente na documentação; hoje os dados são locais. Você pode mover seus dados com a cópia .kiwu.json.'],
+      ['Venho do TaskFlow, perco meus dados?', 'Não: ao abrir o Kiwu pela primeira vez, suas listas, tarefas, anotações e fundo são copiados para a nova pasta; a antiga é mantida como backup.'],
+    ] },
+}[lang];
+const h = (s: string) => fill(lang, s);
+const plain = (s: string) => h(s).replace(/<[^>]+>/g, '');
+const jsonLd = [{ '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: lang === 'pt' ? 'pt-BR' : lang, mainEntity: D.faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: plain(a) } })) }];
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} jsonLd={jsonLd}>
+  {D.faqs.map(([q, a]) => <details><summary>{q}</summary><p set:html={h(a)} /></details>)}
+  <p set:html={h(D.more)} />
+</Page>

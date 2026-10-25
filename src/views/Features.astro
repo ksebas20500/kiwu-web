@@ -1,0 +1,68 @@
+---
+import Page from '../layouts/Page.astro';
+import Shot from '../components/Shot.astro';
+import ajustes from '../assets/ajustes.png';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Funciones de Kiwu: tareas, tablero, calendario y notas', h1: 'Funciones de Kiwu',
+    description: 'Resumen de lo que incluye Kiwu: tareas por materia en lista o tablero, calendario mensual, notas por bloques, archivos por lista, horario semanal en Android, ajustes de apariencia y widgets en macOS.',
+    lead: 'Un conjunto pequeño de herramientas pensado para el trabajo académico, primero en Android y con las mismas ideas en macOS y Linux.',
+    cards: [['Tareas y tablero', 'Listas por materia, fechas y horas, recordatorios y vistas <em>Hoy</em> / <em>Próximos 7 días</em>.', 'tasks', 'Más sobre tareas y tablero'],
+      ['Calendario', 'El mes completo con tus entregas; doble clic en un día para ampliarlo.', 'calendar', 'Más sobre el calendario'],
+      ['Notas', 'Editor por bloques con menú <code>/</code>, formato, código con colores y enlaces con vista previa.', 'notes', 'Más sobre las notas']],
+    other: 'Otras funciones', items: [
+      '<strong>Horario (Android):</strong> varios horarios, clases en varios días, vista de día o de semana, tarjeta «Ahora / Siguiente» y avisos antes de cada clase.',
+      '<strong>Archivos:</strong> vincula una carpeta de tu dispositivo a cada lista; adjunta PDF o Word a las notas como referencia, sin duplicarlos.',
+      '<strong>Ajustes:</strong> tema claro u oscuro, color de la app y fondo de imagen; en escritorio, atajos de teclado editables.',
+      '<strong>Widgets (solo macOS 14+):</strong> <em>Deberes</em>, <em>Nota rápida</em> y <em>Calendario de deberes</em>. En Android y Linux no hay widgets por ahora.',
+      '<strong>Privacidad:</strong> todo es local. <a href="{{privacy}}">Detalles y excepciones</a>.'],
+    alt: 'Pantalla de ajustes de Kiwu, sección Apariencia', cap: 'Ajustes de apariencia en Kiwu (escritorio).',
+    guides: 'Guías: <a href="{{students}}">organizar el semestre con Kiwu</a> y <a href="{{nocloud}}">qué implica un organizador sin nube</a>.',
+    doubts: '¿Dudas sobre tu sistema? Consulta <a href="{{android}}">Android</a>, <a href="{{macos}}">macOS</a>, <a href="{{linux}}">Linux</a> o las <a href="{{faq}}">preguntas frecuentes</a>.' },
+  en: { title: 'Kiwu features: tasks, board, calendar and notes', h1: 'Kiwu features',
+    description: 'An overview of what Kiwu includes: tasks by subject as a list or board, monthly calendar, block-based notes, files per list, weekly timetable on Android, appearance settings and widgets on macOS.',
+    lead: 'A small set of tools built for academic work, Android first and with the same ideas on macOS and Linux.',
+    cards: [['Tasks and board', 'Lists by subject, dates and times, reminders and <em>Today</em> / <em>Next 7 days</em> views.', 'tasks', 'More about tasks and board'],
+      ['Calendar', 'The whole month with your deadlines; double-click a day to expand it.', 'calendar', 'More about the calendar'],
+      ['Notes', 'Block editor with a <code>/</code> menu, formatting, color-highlighted code and link previews.', 'notes', 'More about notes']],
+    other: 'Other features', items: [
+      '<strong>Timetable (Android):</strong> several timetables, classes on several days, day or week view, a “Now / Next” card and alerts before each class.',
+      '<strong>Files:</strong> link a folder on your device to each list; attach PDF or Word files to notes as a reference, without duplicating them.',
+      '<strong>Settings:</strong> light or dark theme, app color and background image; on desktop, editable keyboard shortcuts.',
+      '<strong>Widgets (macOS 14+ only):</strong> <em>Homework</em>, <em>Quick note</em> and <em>Homework calendar</em>. There are no widgets on Android or Linux for now.',
+      '<strong>Privacy:</strong> everything is local. <a href="{{privacy}}">Details and exceptions</a>.'],
+    alt: 'Kiwu settings screen, Appearance section', cap: 'Appearance settings in Kiwu (desktop).',
+    guides: 'Guides: <a href="{{students}}">organizing your semester with Kiwu</a> and <a href="{{nocloud}}">what a planner without the cloud means</a>.',
+    doubts: 'Questions about your system? See <a href="{{android}}">Android</a>, <a href="{{macos}}">macOS</a>, <a href="{{linux}}">Linux</a> or the <a href="{{faq}}">FAQ</a>.' },
+  pt: { title: 'Recursos do Kiwu: tarefas, quadro, calendário e anotações', h1: 'Recursos do Kiwu',
+    description: 'Resumo do que o Kiwu inclui: tarefas por disciplina em lista ou quadro, calendário mensal, anotações em blocos, arquivos por lista, horário semanal no Android, ajustes de aparência e widgets no macOS.',
+    lead: 'Um conjunto pequeno de ferramentas pensado para o trabalho acadêmico, primeiro no Android e com as mesmas ideias no macOS e Linux.',
+    cards: [['Tarefas e quadro', 'Listas por disciplina, datas e horários, lembretes e visões <em>Hoje</em> / <em>Próximos 7 dias</em>.', 'tasks', 'Mais sobre tarefas e quadro'],
+      ['Calendário', 'O mês inteiro com suas entregas; duplo clique em um dia para ampliá-lo.', 'calendar', 'Mais sobre o calendário'],
+      ['Anotações', 'Editor de blocos com menu <code>/</code>, formatação, código colorido e links com prévia.', 'notes', 'Mais sobre as anotações']],
+    other: 'Outros recursos', items: [
+      '<strong>Horário (Android):</strong> vários horários, aulas em vários dias, visão de dia ou de semana, cartão «Agora / Próxima» e avisos antes de cada aula.',
+      '<strong>Arquivos:</strong> vincule uma pasta do seu dispositivo a cada lista; anexe PDF ou Word às anotações como referência, sem duplicá-los.',
+      '<strong>Ajustes:</strong> tema claro ou escuro, cor do app e imagem de fundo; no desktop, atalhos de teclado editáveis.',
+      '<strong>Widgets (somente macOS 14+):</strong> <em>Trabalhos</em>, <em>Nota rápida</em> e <em>Calendário de trabalhos</em>. No Android e no Linux não há widgets por enquanto.',
+      '<strong>Privacidade:</strong> tudo é local. <a href="{{privacy}}">Detalhes e exceções</a>.'],
+    alt: 'Tela de ajustes do Kiwu, seção Aparência', cap: 'Ajustes de aparência no Kiwu (desktop).',
+    guides: 'Guias: <a href="{{students}}">organizar o semestre com o Kiwu</a> e <a href="{{nocloud}}">o que significa um organizador sem nuvem</a>.',
+    doubts: 'Dúvidas sobre o seu sistema? Veja <a href="{{android}}">Android</a>, <a href="{{macos}}">macOS</a>, <a href="{{linux}}">Linux</a> ou as <a href="{{faq}}">perguntas frequentes</a>.' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <ul class="cards">
+    {D.cards.map(([t, p, r, l]) => <li class="card"><h2>{t}</h2><p set:html={h(p)} /><p><a href={fill(lang, `{{${r}}}`)}>{l}</a></p></li>)}
+  </ul>
+  <h2>{D.other}</h2>
+  <ul>{D.items.map((i) => <li set:html={h(i)} />)}</ul>
+  <figure>
+    <Shot src={ajustes} alt={D.alt} />
+    <figcaption>{D.cap}</figcaption>
+  </figure>
+  <p set:html={h(D.guides)} />
+  <p set:html={h(D.doubts)} />
+</Page>

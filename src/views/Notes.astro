@@ -1,0 +1,27 @@
+---
+import Page from '../layouts/Page.astro';
+import Shot from '../components/Shot.astro';
+import notas from '../assets/notas.png';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Notas por bloques', h1: 'Notas por bloques', description: 'Cuadernos y páginas con un editor por bloques en Kiwu: menú de barra, formato de texto, bloques de código con colores, enlaces con vista previa y archivos adjuntos.',
+    lead: 'Un editor de apuntes pensado para clases: bloques, código con colores y enlaces con vista previa.', alt: 'Editor de notas de Kiwu con el menú de bloques abierto', cap: 'Editor por bloques con el menú <code>/</code>.',
+    items: ['Cuadernos y páginas con emoji, favoritas y búsqueda.', 'Editor por bloques con menú <code>/</code> y formato de texto (en Linux se documentan negrita, cursiva, subrayado, tachado, código, color, resaltado y enlaces).', 'Bloques de código con colores tipo VS Code (temas Dark+ y Light+).', 'Enlaces con vista previa (título, descripción e imagen) y vídeos de YouTube o Vimeo reproducibles dentro de la nota. Esto requiere conexión a Internet: <a href="{{privacy}}">ver privacidad</a>.', 'PDF y Word adjuntos como referencia, sin duplicar el archivo.'],
+    end: 'Las notas usan el mismo formato en Android, macOS y Linux, y los datos se pueden mover entre sistemas con la copia <code>.kiwu.json</code> (ver <a href="{{linux}}">Linux</a>).' },
+  en: { title: 'Block-based notes', h1: 'Block-based notes', description: 'Notebooks and pages with a block editor in Kiwu: slash menu, text formatting, color-highlighted code blocks, link previews and attached files.',
+    lead: 'A note editor built for class: blocks, color-highlighted code and link previews.', alt: 'Kiwu notes editor with the block menu open', cap: 'Block editor with the <code>/</code> menu.',
+    items: ['Notebooks and pages with emoji, favorites and search.', 'Block editor with a <code>/</code> menu and text formatting (on Linux, bold, italic, underline, strikethrough, code, color, highlight and links are documented).', 'Code blocks with VS Code-style colors (Dark+ and Light+ themes).', 'Links with previews (title, description and image) and YouTube or Vimeo videos playable inside the note. This requires an internet connection: <a href="{{privacy}}">see privacy</a>.', 'PDF and Word files attached as a reference, without duplicating the file.'],
+    end: 'Notes use the same format on Android, macOS and Linux, and data can be moved between systems with the <code>.kiwu.json</code> backup (see <a href="{{linux}}">Linux</a>).' },
+  pt: { title: 'Anotações em blocos', h1: 'Anotações em blocos', description: 'Cadernos e páginas com um editor de blocos no Kiwu: menu com barra, formatação de texto, blocos de código coloridos, links com prévia e arquivos anexos.',
+    lead: 'Um editor de anotações pensado para a aula: blocos, código colorido e links com prévia.', alt: 'Editor de anotações do Kiwu com o menu de blocos aberto', cap: 'Editor de blocos com o menu <code>/</code>.',
+    items: ['Cadernos e páginas com emoji, favoritas e busca.', 'Editor de blocos com menu <code>/</code> e formatação de texto (no Linux estão documentados negrito, itálico, sublinhado, tachado, código, cor, destaque e links).', 'Blocos de código com cores no estilo VS Code (temas Dark+ e Light+).', 'Links com prévia (título, descrição e imagem) e vídeos do YouTube ou Vimeo reproduzíveis dentro da anotação. Isso requer conexão com a internet: <a href="{{privacy}}">veja privacidade</a>.', 'PDF e Word anexados como referência, sem duplicar o arquivo.'],
+    end: 'As anotações usam o mesmo formato no Android, macOS e Linux, e os dados podem ser movidos entre sistemas com a cópia <code>.kiwu.json</code> (veja <a href="{{linux}}">Linux</a>).' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <figure><Shot src={notas} alt={D.alt} /><figcaption set:html={D.cap} /></figure>
+  <ul>{D.items.map((i) => <li set:html={h(i)} />)}</ul>
+  <p set:html={h(D.end)} />
+</Page>

@@ -1,0 +1,59 @@
+---
+import Page from '../layouts/Page.astro';
+import Shot from '../components/Shot.astro';
+import tablero from '../assets/tablero.png';
+import notas from '../assets/notas.png';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'App de tareas para estudiantes universitarios: cómo organizar el semestre', h1: 'Una app de tareas para estudiantes: cómo organizar tu semestre con Kiwu',
+    description: 'Guía práctica para organizar deberes, entregas y apuntes del semestre con Kiwu, una app de tareas para estudiantes, primero en Android y también en macOS y Linux, con tus datos en tu dispositivo.',
+    lead: 'Kiwu no impone un método, pero sus piezas encajan bien con el ritmo de un semestre: una lista por materia, un tablero para lo que está en curso, un calendario de entregas y notas de clase.',
+    h1a: '1. Una lista por materia', p1: 'Crea una lista para cada asignatura (por ejemplo, <em>Cálculo</em>, <em>Software</em>, <em>Fundamentos</em>) y añade cada deber con su fecha y hora. Así ves todo lo de una materia en un sitio, y las vistas <em>Hoy</em> y <em>Próximos 7 días</em> reúnen lo urgente de todas ellas. Más en <a href="{{tasks}}">tareas y tablero</a>.',
+    h2a: '2. Un tablero para lo que está en marcha', p2: 'Cuando se acumulan proyectos y quizzes, pasa a la vista de tablero: <em>Por hacer</em>, <em>En curso</em> y <em>Hecho</em>. Arrastra cada tarea cuando avanzas; es una forma visual de ver qué tienes a medias.',
+    alt1: 'Kiwu en modo tablero con tareas de varias materias en la columna Por hacer',
+    h3a: '3. El calendario para ver la semana de entregas', p3: 'El <a href="{{calendar}}">calendario mensual</a> usa las fechas de tus tareas, así que no tienes que apuntar nada dos veces. Sirve para detectar semanas con muchas entregas antes de que lleguen.',
+    h4a: '4. Notas de clase junto a tus tareas', p4: 'Escribe apuntes en cuadernos y páginas con el <a href="{{notes}}">editor por bloques</a>: títulos, listas, bloques de código con colores si estudias programación, y enlaces con vista previa. Puedes adjuntar el PDF de la guía como referencia y vincular a cada lista la carpeta donde guardas los archivos de esa materia.',
+    alt2: 'Editor de notas de Kiwu con el menú de bloques abierto',
+    know: 'Qué conviene saber', k1: 'Funciona en <a href="{{android}}">Android</a> (con horario semanal), <a href="{{macos}}">macOS</a> (13 o superior, widgets en 14+) y <a href="{{linux}}">Linux</a> (primera versión, experimental).',
+    k2: 'Tus datos están en tu dispositivo y no se sincronizan entre dispositivos. Lee <a href="{{nocloud}}">qué implica usar un organizador sin nube</a>.', cta: 'Instalar Kiwu' },
+  en: { title: 'A task app for university students: how to organize your semester', h1: 'A task app for students: how to organize your semester with Kiwu',
+    description: 'A practical guide to organizing homework, deadlines and notes for your semester with Kiwu, a task app for students, Android first and also on macOS and Linux, with your data on your device.',
+    lead: 'Kiwu does not impose a method, but its pieces fit the rhythm of a semester well: one list per subject, a board for what is in progress, a deadline calendar and class notes.',
+    h1a: '1. One list per subject', p1: 'Create a list for each course (for example, <em>Calculus</em>, <em>Software</em>, <em>Fundamentals</em>) and add each assignment with its date and time. You see everything for a subject in one place, and the <em>Today</em> and <em>Next 7 days</em> views gather what is urgent across all of them. More in <a href="{{tasks}}">tasks and board</a>.',
+    h2a: '2. A board for what is under way', p2: 'When projects and quizzes pile up, switch to the board view: <em>To do</em>, <em>In progress</em> and <em>Done</em>. Drag each task as you advance; it is a visual way to see what you have half done.',
+    alt1: 'Kiwu in board mode with tasks from several subjects in the To do column',
+    h3a: '3. The calendar to see your deadline week', p3: 'The <a href="{{calendar}}">monthly calendar</a> uses your tasks’ dates, so you never write anything down twice. It helps you spot weeks with many deadlines before they arrive.',
+    h4a: '4. Class notes next to your tasks', p4: 'Write notes in notebooks and pages with the <a href="{{notes}}">block editor</a>: headings, lists, color-highlighted code blocks if you study programming, and links with previews. You can attach the guide’s PDF as a reference and link to each list the folder where you keep that subject’s files.',
+    alt2: 'Kiwu notes editor with the block menu open',
+    know: 'Good to know', k1: 'It works on <a href="{{android}}">Android</a> (with a weekly timetable), <a href="{{macos}}">macOS</a> (13 or later, widgets on 14+) and <a href="{{linux}}">Linux</a> (first version, experimental).',
+    k2: 'Your data is on your device and is not synced between devices. Read <a href="{{nocloud}}">what using a planner without the cloud means</a>.', cta: 'Install Kiwu' },
+  pt: { title: 'App de tarefas para estudantes universitários: como organizar o semestre', h1: 'Um app de tarefas para estudantes: como organizar seu semestre com o Kiwu',
+    description: 'Guia prático para organizar trabalhos, entregas e anotações do semestre com o Kiwu, um app de tarefas para estudantes, primeiro no Android e também no macOS e Linux, com seus dados no seu dispositivo.',
+    lead: 'O Kiwu não impõe um método, mas suas peças combinam bem com o ritmo de um semestre: uma lista por disciplina, um quadro para o que está em andamento, um calendário de entregas e anotações de aula.',
+    h1a: '1. Uma lista por disciplina', p1: 'Crie uma lista para cada disciplina (por exemplo, <em>Cálculo</em>, <em>Software</em>, <em>Fundamentos</em>) e adicione cada trabalho com data e hora. Assim você vê tudo de uma disciplina num só lugar, e as visões <em>Hoje</em> e <em>Próximos 7 dias</em> reúnem o que é urgente em todas elas. Mais em <a href="{{tasks}}">tarefas e quadro</a>.',
+    h2a: '2. Um quadro para o que está em andamento', p2: 'Quando projetos e provas se acumulam, passe para a visão de quadro: <em>A fazer</em>, <em>Em andamento</em> e <em>Feito</em>. Arraste cada tarefa conforme avança; é um jeito visual de ver o que você deixou pela metade.',
+    alt1: 'Kiwu no modo quadro com tarefas de várias disciplinas na coluna A fazer',
+    h3a: '3. O calendário para ver a semana de entregas', p3: 'O <a href="{{calendar}}">calendário mensal</a> usa as datas das suas tarefas, então você não precisa anotar nada duas vezes. Serve para detectar semanas com muitas entregas antes que cheguem.',
+    h4a: '4. Anotações de aula junto das tarefas', p4: 'Escreva anotações em cadernos e páginas com o <a href="{{notes}}">editor de blocos</a>: títulos, listas, blocos de código coloridos se você estuda programação e links com prévia. Você pode anexar o PDF do roteiro como referência e vincular a cada lista a pasta onde guarda os arquivos dessa disciplina.',
+    alt2: 'Editor de anotações do Kiwu com o menu de blocos aberto',
+    know: 'O que vale saber', k1: 'Funciona no <a href="{{android}}">Android</a> (com horário semanal), no <a href="{{macos}}">macOS</a> (13 ou superior, widgets no 14+) e no <a href="{{linux}}">Linux</a> (primeira versão, experimental).',
+    k2: 'Seus dados ficam no seu dispositivo e não são sincronizados entre dispositivos. Leia <a href="{{nocloud}}">o que significa usar um organizador sem nuvem</a>.', cta: 'Instalar o Kiwu' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <h2>{D.h1a}</h2>
+  <p set:html={h(D.p1)} />
+  <h2>{D.h2a}</h2>
+  <p set:html={h(D.p2)} />
+  <figure><Shot src={tablero} alt={D.alt1} /></figure>
+  <h2>{D.h3a}</h2>
+  <p set:html={h(D.p3)} />
+  <h2>{D.h4a}</h2>
+  <p set:html={h(D.p4)} />
+  <figure><Shot src={notas} alt={D.alt2} /></figure>
+  <h2>{D.know}</h2>
+  <ul><li set:html={h(D.k1)} /><li set:html={h(D.k2)} /></ul>
+  <p class="actions"><a class="btn primary" href={fill(lang, '{{install}}')}>{D.cta}</a></p>
+</Page>

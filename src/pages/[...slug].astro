@@ -1,0 +1,35 @@
+---
+import { langs, path, routes, type Lang, type Route } from '../i18n';
+import Home from '../views/Home.astro';
+import Features from '../views/Features.astro';
+import Tasks from '../views/Tasks.astro';
+import Calendar from '../views/Calendar.astro';
+import Notes from '../views/Notes.astro';
+import Android from '../views/Android.astro';
+import Students from '../views/Students.astro';
+import Install from '../views/Install.astro';
+import MacOS from '../views/MacOS.astro';
+import Linux from '../views/Linux.astro';
+import NoCloud from '../views/NoCloud.astro';
+import Privacy from '../views/Privacy.astro';
+import Faq from '../views/Faq.astro';
+import License from '../views/License.astro';
+
+const views: Record<Route, any> = {
+  home: Home, features: Features, tasks: Tasks, calendar: Calendar, notes: Notes, android: Android, students: Students,
+  install: Install, macos: MacOS, linux: Linux, nocloud: NoCloud, privacy: Privacy, faq: Faq, license: License,
+};
+
+// Una página estática por idioma y ruta (español en la raíz, /en/ y /pt-br/).
+export function getStaticPaths() {
+  return langs.flatMap((lang) =>
+    (Object.keys(routes) as Route[]).map((route) => ({
+      params: { slug: path(lang, route).replace(/^\/|\/$/g, '') || undefined },
+      props: { lang, route },
+    })),
+  );
+}
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const View = views[route];
+---
+<View lang={lang} route={route} />

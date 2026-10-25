@@ -1,0 +1,54 @@
+---
+import Page from '../layouts/Page.astro';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Privacidad de Kiwu y de este sitio', h1: 'Privacidad',
+    description: 'Kiwu guarda tus datos en tu dispositivo, sin cuentas, publicidad ni analíticas. Cuándo se conecta a Internet (vistas previas de enlaces y vídeos) y qué recoge este sitio web.',
+    lead: 'Kiwu no tiene servidor, cuentas, publicidad ni analíticas. Aquí está lo que hace y lo que no.',
+    app: 'La aplicación', appItems: [
+      'Tus tareas, notas y ajustes se guardan localmente: en Android en el almacenamiento privado de la app, en macOS en <code>~/Library/Application Support/Kiwu</code> y en Linux en <code>~/.local/share/kiwu</code> y <code>~/.config/kiwu</code>.',
+      'No hay cuentas, servidor propio, publicidad ni analíticas.',
+      'En macOS, los widgets leen una copia de los deberes y notas recientes desde una carpeta compartida con la app (un App Group en compilaciones firmadas desde Xcode, o una carpeta autorizada en el instalador <code>.dmg</code>).',
+      'El proyecto de macOS incluye un manifiesto de privacidad de Apple que declara que no hay seguimiento ni datos recopilados.'],
+    net: 'Cuándo se conecta a Internet', n1: 'Solo cuando pegas un enlace en una nota: Kiwu descarga la vista previa (título, descripción e imagen) de esa página o reproduce un vídeo de YouTube o Vimeo. Esas conexiones van a los sitios de esos enlaces, que tienen sus propias políticas. Kiwu no envía tus datos. En Linux, el vídeo incrustado requiere WebKitGTK; sin él, los vídeos se abren en el navegador.',
+    n2: 'Instalar o descargar la app también implica conexión a GitHub.',
+    site: 'Este sitio web', s1: 'Este sitio es estático e informativo: no tiene cuentas, cookies propias ni herramientas de analítica. Los enlaces de descarga y el código llevan a GitHub, que es un servicio independiente. El único formulario es el de registro de testers de Android, que es un Google Form externo: el correo que escribas lo recibe Google Forms y solo lo usamos para invitarte a la prueba cerrada de Google Play. El sitio se aloja en Firebase Hosting (Google), que puede registrar datos técnicos de las visitas como cualquier servidor web. Tu idioma y tema se recuerdan solo en tu navegador (almacenamiento local), sin enviarse a ningún sitio.',
+    more: 'Más información: <a href="{{faq}}">preguntas frecuentes</a> · <a href="{{license}}">licencia</a>.' },
+  en: { title: 'Privacy of Kiwu and of this website', h1: 'Privacy',
+    description: 'Kiwu keeps your data on your device, with no accounts, ads or analytics. When it connects to the internet (link and video previews) and what this website collects.',
+    lead: 'Kiwu has no server, accounts, ads or analytics. Here is what it does and what it does not.',
+    app: 'The app', appItems: [
+      'Your tasks, notes and settings are stored locally: on Android in the app’s private storage, on macOS in <code>~/Library/Application Support/Kiwu</code> and on Linux in <code>~/.local/share/kiwu</code> and <code>~/.config/kiwu</code>.',
+      'There are no accounts, own server, ads or analytics.',
+      'On macOS, widgets read a copy of recent homework and notes from a folder shared with the app (an App Group in builds signed from Xcode, or an authorized folder in the <code>.dmg</code> installer).',
+      'The macOS project includes an Apple privacy manifest declaring no tracking and no data collected.'],
+    net: 'When it connects to the internet', n1: 'Only when you paste a link into a note: Kiwu downloads that page’s preview (title, description and image) or plays a YouTube or Vimeo video. Those connections go to the sites behind those links, which have their own policies. Kiwu does not send your data. On Linux, embedded video requires WebKitGTK; without it, videos open in the browser.',
+    n2: 'Installing or downloading the app also involves a connection to GitHub.',
+    site: 'This website', s1: 'This site is static and informational: it has no accounts, first-party cookies or analytics tools. Download links and the code lead to GitHub, an independent service. The only form is the Android tester sign-up, which is an external Google Form: the email you enter is received by Google Forms and we only use it to invite you to the Google Play closed test. The site is hosted on Firebase Hosting (Google), which may log technical visit data like any web server. Your language and theme are remembered only in your browser (local storage) and are not sent anywhere.',
+    more: 'More information: <a href="{{faq}}">FAQ</a> · <a href="{{license}}">license</a>.' },
+  pt: { title: 'Privacidade do Kiwu e deste site', h1: 'Privacidade',
+    description: 'O Kiwu guarda seus dados no seu dispositivo, sem contas, publicidade nem análises. Quando ele se conecta à internet (prévias de links e vídeos) e o que este site coleta.',
+    lead: 'O Kiwu não tem servidor, contas, publicidade nem análises. Aqui está o que ele faz e o que não faz.',
+    app: 'O aplicativo', appItems: [
+      'Suas tarefas, anotações e configurações ficam salvas localmente: no Android, no armazenamento privado do app; no macOS, em <code>~/Library/Application Support/Kiwu</code>; e no Linux, em <code>~/.local/share/kiwu</code> e <code>~/.config/kiwu</code>.',
+      'Não há contas, servidor próprio, publicidade nem análises.',
+      'No macOS, os widgets leem uma cópia das tarefas e anotações recentes a partir de uma pasta compartilhada com o app (um App Group em builds assinados pelo Xcode, ou uma pasta autorizada no instalador <code>.dmg</code>).',
+      'O projeto de macOS inclui um manifesto de privacidade da Apple que declara que não há rastreamento nem dados coletados.'],
+    net: 'Quando ele se conecta à internet', n1: 'Somente quando você cola um link em uma anotação: o Kiwu baixa a prévia (título, descrição e imagem) dessa página ou reproduz um vídeo do YouTube ou Vimeo. Essas conexões vão para os sites desses links, que têm suas próprias políticas. O Kiwu não envia seus dados. No Linux, o vídeo incorporado exige o WebKitGTK; sem ele, os vídeos abrem no navegador.',
+    n2: 'Instalar ou baixar o app também envolve uma conexão com o GitHub.',
+    site: 'Este site', s1: 'Este site é estático e informativo: não tem contas, cookies próprios nem ferramentas de análise. Os links de download e o código levam ao GitHub, que é um serviço independente. O único formulário é o de cadastro de testadores do Android, que é um Google Forms externo: o e-mail que você digitar é recebido pelo Google Forms e só o usamos para convidar você ao teste fechado do Google Play. O site fica hospedado no Firebase Hosting (Google), que pode registrar dados técnicos das visitas como qualquer servidor web. Seu idioma e tema são lembrados apenas no seu navegador (armazenamento local), sem serem enviados a lugar nenhum.',
+    more: 'Mais informações: <a href="{{faq}}">perguntas frequentes</a> · <a href="{{license}}">licença</a>.' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <h2>{D.app}</h2>
+  <ul>{D.appItems.map((i) => <li set:html={h(i)} />)}</ul>
+  <h2>{D.net}</h2>
+  <p>{D.n1}</p>
+  <p>{D.n2}</p>
+  <h2>{D.site}</h2>
+  <p>{D.s1}</p>
+  <p set:html={h(D.more)} />
+</Page>

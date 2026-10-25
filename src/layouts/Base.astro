@@ -1,17 +1,23 @@
 ---
 import '../styles/global.css';
-import { nav, REPO, SITE_URL_SET, TESTER_FORM } from '../site';
-interface Props { title: string; description: string; jsonLd?: object[]; noindex?: boolean; ogType?: string }
-const { title, description, jsonLd = [], noindex = false, ogType = 'website' } = Astro.props;
-const path = Astro.url.pathname;
-const canonical = new URL(path, Astro.site).href;
+import { REPO, SITE_URL_SET, TESTER_FORM } from '../site';
+import { langs, prefix, htmlLang, ogLocale, langName, path, ui, type Lang, type Route } from '../i18n';
+interface Props { title: string; description: string; lang?: Lang; route?: Route; jsonLd?: object[]; noindex?: boolean; ogType?: string }
+const { title, description, lang = 'es', route, jsonLd = [], noindex = false, ogType = 'website' } = Astro.props;
+const t = ui[lang];
+const pathname = Astro.url.pathname;
+const canonical = new URL(pathname, Astro.site).href;
 const ogImage = new URL('/og.png', Astro.site).href;
-const fullTitle = path === '/' ? title : `${title} · Kiwu`;
+const fullTitle = route === 'home' ? title : `${title}${t.titleSuffix}`;
 // Sin SITE_URL (dominio aún no definido) todo el sitio se marca noindex para no indexar un dominio provisional.
 const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
+const alts = route ? langs.map((l) => ({ l, href: path(l, route) })) : [];
+const navKeys = ['features', 'android', 'students', 'install', 'macos', 'linux', 'privacy', 'faq'] as const;
+const navRoute = (k: (typeof navKeys)[number]) => path(lang, k);
+const isCurrent = (k: (typeof navKeys)[number]) => (k === 'features' ? pathname.startsWith(navRoute(k)) : pathname === navRoute(k));
 ---
 <!doctype html>
-<html lang="es">
+<html lang={htmlLang[lang]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,39 +25,61 @@ const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
     <meta name="description" content={description} />
     {robots && <meta name="robots" content={robots} />}
     <link rel="canonical" href={canonical} />
+    {alts.map((a) => <link rel="alternate" hreflang={htmlLang[a.l]} href={new URL(a.href, Astro.site).href} />)}
+    {route && <link rel="alternate" hreflang="x-default" href={new URL(path('es', route), Astro.site).href} />}
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#f6f5ff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#12111f" media="(prefers-color-scheme: dark)" />
     <script is:inline>try{var t=localStorage.getItem('kiwu-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+    {route === 'home' && lang === 'es' && (
+      <script is:inline define:vars={{ dest: { en: path('en', 'home'), pt: path('pt', 'home') } }}>
+        // Primera visita a la portada: si el navegador está en inglés o portugués, ir a esa versión (una sola vez; los rastreadores se quedan).
+        try {
+          if (!localStorage.getItem('kiwu-lang') && !/bot|crawl|spider|lighthouse|preview/i.test(navigator.userAgent)) {
+            var l = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'es']);
+            var pick = 'es';
+            for (var i = 0; i < l.length; i++) { var c = String(l[i]).toLowerCase().slice(0, 2); if (c === 'es' || c === 'en' || c === 'pt') { pick = c; break; } }
+            localStorage.setItem('kiwu-lang', pick);
+            if (pick !== 'es') location.replace(dest[pick] + location.search + location.hash);
+          }
+        } catch (e) {}
+      </script>
+    )}
     <meta property="og:site_name" content="Kiwu" />
     <meta property="og:type" content={ogType} />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={ogLocale[lang]} />
+    {langs.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ogLocale[l]} />)}
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Kiwu, el gato mago, sobre un degradado violeta y azul" />
+    <meta property="og:image:alt" content={t.ogAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     {jsonLd.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
   </head>
   <body>
-    <a class="skip" href="#contenido">Saltar al contenido</a>
+    <a class="skip" href="#contenido">{t.skip}</a>
     <header class="site-header">
       <div class="wrap bar">
-        <a class="brand" href="/" aria-label="Kiwu, inicio">
+        <a class="brand" href={path(lang, 'home')} aria-label={t.home}>
           <img src="/icono-256.png" width="32" height="32" alt="" /> <span>Kiwu</span>
         </a>
         <div class="tools">
-          <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar entre modo claro y oscuro" title="Cambiar tema"><span aria-hidden="true">◐</span></button>
-          <a class="btn primary cta-top" href={TESTER_FORM} rel="noopener">Ser tester</a>
+          {alts.length > 0 && (
+            <nav class="langs" aria-label={t.langLabel}>
+              {alts.map((a) => <a href={a.href} hreflang={htmlLang[a.l]} lang={htmlLang[a.l]} title={langName[a.l]} data-lang={a.l} aria-current={a.l === lang ? 'true' : undefined}>{a.l.toUpperCase()}</a>)}
+            </nav>
+          )}
+          <button type="button" class="theme-toggle" id="theme-toggle" aria-label={t.theme} title={t.themeTitle}><span aria-hidden="true">◐</span></button>
+          <a class="btn primary cta-top" href={TESTER_FORM} rel="noopener">{t.tester}</a>
         </div>
-        <nav aria-label="Principal" class="mainnav">
+        <nav aria-label={t.main} class="mainnav">
           <ul>
-            {nav.map((n) => (
-              <li><a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a></li>
+            {navKeys.map((k) => (
+              <li><a href={navRoute(k)} aria-current={isCurrent(k) ? 'page' : undefined}>{t.nav[k]}</a></li>
             ))}
           </ul>
         </nav>
@@ -62,15 +90,15 @@ const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
       <div class="wrap foot">
         <div>
           <strong>Kiwu</strong>
-          <p>Tareas, calendario, horario y apuntes para estudiantes, en Android, macOS y Linux. Software libre bajo licencia MIT.</p>
+          <p>{t.footerText}</p>
         </div>
-        <nav aria-label="Pie de página">
+        <nav aria-label={t.footerNav}>
           <ul>
-            <li><a href="/instalar/">Instalar</a></li>
-            <li><a href="/sin-nube/">Sin nube</a></li>
-            <li><a href="/privacidad/">Privacidad</a></li>
-            <li><a href="/licencia/">Licencia</a></li>
-            <li><a href={REPO} rel="noopener">Código en GitHub</a></li>
+            <li><a href={path(lang, 'install')}>{t.footerLinks.install}</a></li>
+            <li><a href={path(lang, 'nocloud')}>{t.footerLinks.nocloud}</a></li>
+            <li><a href={path(lang, 'privacy')}>{t.footerLinks.privacy}</a></li>
+            <li><a href={path(lang, 'license')}>{t.footerLinks.license}</a></li>
+            <li><a href={REPO} rel="noopener">{t.github}</a></li>
           </ul>
         </nav>
       </div>
@@ -83,6 +111,9 @@ const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
     var next = isDark() ? 'light' : 'dark';
     root.dataset.theme = next;
     try { localStorage.setItem('kiwu-theme', next); } catch (e) {}
+  });
+  document.querySelectorAll('.langs a[data-lang]').forEach(function (a) {
+    a.addEventListener('click', function () { try { localStorage.setItem('kiwu-lang', a.dataset.lang); } catch (e) {} });
   });
   var cur = document.querySelector('.mainnav [aria-current]');
   if (cur && cur.scrollIntoView) { var ul = cur.closest('ul'); ul.scrollLeft = cur.offsetLeft - 16; }

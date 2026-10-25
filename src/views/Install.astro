@@ -1,0 +1,74 @@
+---
+import Page from '../layouts/Page.astro';
+import Cmd from '../components/Cmd.astro';
+import { INSTALL_CMD } from '../site';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Instalar Kiwu en Android, macOS y Linux', h1: 'Instalar Kiwu',
+    description: 'Descarga e instala Kiwu: prueba cerrada en Google Play o APK para Android, comando único para macOS y Linux, o descarga manual desde GitHub Releases con comprobación de suma de verificación.',
+    lead: 'Elige tu sistema. Los archivos se descargan siempre de GitHub Releases, no de este sitio.',
+    and: 'Android (recomendado)', andP: 'Hazte tester de la prueba cerrada para instalar desde Google Play, o descarga el APK directamente.', andB1: 'Ser tester en Google Play', andB2: 'Guía y APK de Android',
+    cmdH: 'Con un comando (macOS y Linux)', cmdP: 'El script detecta tu sistema, ejecuta el instalador que le corresponde y comprueba la suma de verificación de lo que descarga.', cmdLabel: 'Comando de instalación para macOS y Linux',
+    cmdSmall: 'Es buena práctica leer un script antes de ejecutarlo: <a href="{{REPO}}/blob/main/install.sh" rel="noopener">install.sh</a>.',
+    manual: 'Descarga manual', cap: 'Archivos publicados', th: ['Sistema', 'Archivo', 'Estado', 'Release en GitHub', 'Detalles'],
+    r1: ['Versión 2.0 (estable)', 'Guía de macOS'], r2: ['0.1.0 (<i lang="en">pre-release</i>, experimental)', 'Guía de Linux'], r3: ['0.1.0 (<i lang="en">pre-release</i>, versión de prueba)', 'Guía de Android'],
+    tableP: 'Los enlaces de archivo llevan directamente al fichero alojado en GitHub; los de «Release» abren la página de esa versión, donde está también el <code>.sha256</code> de cada archivo. Todas las versiones: <a href="{{RELEASES}}" rel="noopener">GitHub Releases</a>. Los tres sistemas tienen numeración independiente.',
+    before: 'Antes de instalar', bl: [
+      '<strong>Android:</strong> la prueba cerrada de Google Play requiere registrarte como tester; el APK se instala fuera de la tienda. <a href="{{android}}">Cómo instalarla</a>.',
+      '<strong>macOS:</strong> la app no está notarizada; verás un aviso de Gatekeeper la primera vez. <a href="{{macos}}#abrir">Cómo abrirla</a>.',
+      '<strong>Linux:</strong> hay que instalar antes GTK4, libadwaita y otras dependencias, y la interfaz es experimental. <a href="{{linux}}">Ver requisitos</a>.',
+      'No hay versión para Windows ni iOS.'] },
+  en: { title: 'Install Kiwu on Android, macOS and Linux', h1: 'Install Kiwu',
+    description: 'Download and install Kiwu: closed test on Google Play or APK for Android, a single command for macOS and Linux, or a manual download from GitHub Releases with checksum verification.',
+    lead: 'Pick your system. Files are always downloaded from GitHub Releases, not from this site.',
+    and: 'Android (recommended)', andP: 'Become a tester in the closed test to install from Google Play, or download the APK directly.', andB1: 'Become a tester on Google Play', andB2: 'Android guide and APK',
+    cmdH: 'With one command (macOS and Linux)', cmdP: 'The script detects your system, runs the matching installer and verifies the checksum of what it downloads.', cmdLabel: 'Install command for macOS and Linux',
+    cmdSmall: 'It is good practice to read a script before running it: <a href="{{REPO}}/blob/main/install.sh" rel="noopener">install.sh</a>.',
+    manual: 'Manual download', cap: 'Published files', th: ['System', 'File', 'Status', 'GitHub release', 'Details'],
+    r1: ['Version 2.0 (stable)', 'macOS guide'], r2: ['0.1.0 (<i>pre-release</i>, experimental)', 'Linux guide'], r3: ['0.1.0 (<i>pre-release</i>, test version)', 'Android guide'],
+    tableP: 'File links go straight to the file hosted on GitHub; “Release” links open that version’s page, which also has each file’s <code>.sha256</code>. All versions: <a href="{{RELEASES}}" rel="noopener">GitHub Releases</a>. The three systems are numbered independently.',
+    before: 'Before installing', bl: [
+      '<strong>Android:</strong> the Google Play closed test requires signing up as a tester; the APK installs outside the store. <a href="{{android}}">How to install it</a>.',
+      '<strong>macOS:</strong> the app is not notarized; you will see a Gatekeeper warning the first time. <a href="{{macos}}#open">How to open it</a>.',
+      '<strong>Linux:</strong> you must first install GTK4, libadwaita and other dependencies, and the interface is experimental. <a href="{{linux}}">See requirements</a>.',
+      'There is no version for Windows or iOS.'] },
+  pt: { title: 'Instalar o Kiwu no Android, macOS e Linux', h1: 'Instalar o Kiwu',
+    description: 'Baixe e instale o Kiwu: teste fechado no Google Play ou APK para Android, comando único para macOS e Linux, ou download manual no GitHub Releases com verificação de checksum.',
+    lead: 'Escolha o seu sistema. Os arquivos são sempre baixados do GitHub Releases, não deste site.',
+    and: 'Android (recomendado)', andP: 'Torne-se testador do teste fechado para instalar pelo Google Play, ou baixe o APK diretamente.', andB1: 'Ser testador no Google Play', andB2: 'Guia e APK do Android',
+    cmdH: 'Com um comando (macOS e Linux)', cmdP: 'O script detecta o seu sistema, executa o instalador correspondente e verifica o checksum do que baixa.', cmdLabel: 'Comando de instalação para macOS e Linux',
+    cmdSmall: 'É uma boa prática ler um script antes de executá-lo: <a href="{{REPO}}/blob/main/install.sh" rel="noopener">install.sh</a>.',
+    manual: 'Download manual', cap: 'Arquivos publicados', th: ['Sistema', 'Arquivo', 'Estado', 'Release no GitHub', 'Detalhes'],
+    r1: ['Versão 2.0 (estável)', 'Guia do macOS'], r2: ['0.1.0 (<i lang="en">pre-release</i>, experimental)', 'Guia do Linux'], r3: ['0.1.0 (<i lang="en">pre-release</i>, versão de teste)', 'Guia do Android'],
+    tableP: 'Os links de arquivo levam direto ao arquivo hospedado no GitHub; os de «Release» abrem a página dessa versão, onde também está o <code>.sha256</code> de cada arquivo. Todas as versões: <a href="{{RELEASES}}" rel="noopener">GitHub Releases</a>. Os três sistemas têm numeração independente.',
+    before: 'Antes de instalar', bl: [
+      '<strong>Android:</strong> o teste fechado do Google Play exige cadastro como testador; o APK é instalado fora da loja. <a href="{{android}}">Como instalar</a>.',
+      '<strong>macOS:</strong> o app não é notarizado; você verá um aviso do Gatekeeper na primeira vez. <a href="{{macos}}#abrir">Como abri-lo</a>.',
+      '<strong>Linux:</strong> é preciso instalar antes GTK4, libadwaita e outras dependências, e a interface é experimental. <a href="{{linux}}">Ver requisitos</a>.',
+      'Não há versão para Windows nem iOS.'] },
+}[lang];
+const h = (s: string) => fill(lang, s);
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <h2>{D.and}</h2>
+  <p>{D.andP}</p>
+  <div class="actions"><a class="btn primary" href={h('{{TESTER}}')} rel="noopener">{D.andB1}</a><a class="btn secondary" href={h('{{android}}')}>{D.andB2}</a></div>
+  <h2>{D.cmdH}</h2>
+  <p>{D.cmdP}</p>
+  <Cmd lang={lang} cmd={INSTALL_CMD} label={D.cmdLabel} />
+  <p class="small" set:html={h(D.cmdSmall)} />
+  <h2>{D.manual}</h2>
+  <div class="scroll"><table>
+    <caption class="small">{D.cap}</caption>
+    <thead><tr>{D.th.map((x) => <th scope="col">{x}</th>)}</tr></thead>
+    <tbody>
+      <tr><th scope="row">macOS 13+</th><td><a href={h('{{MACOS_DMG}}')}><code>Kiwu.dmg</code></a></td><td set:html={D.r1[0]} /><td><a href={h('{{MACOS_RELEASE}}')} rel="noopener">v2.0.0</a></td><td><a href={h('{{macos}}')}>{D.r1[1]}</a></td></tr>
+      <tr><th scope="row">Linux (Arch + Hyprland)</th><td><a href={h('{{LINUX_TARBALL}}')}><code>kiwu-linux.tar.gz</code></a></td><td set:html={D.r2[0]} /><td><a href={h('{{LINUX_RELEASE}}')} rel="noopener">linux-v0.1.0</a></td><td><a href={h('{{linux}}')}>{D.r2[1]}</a></td></tr>
+      <tr><th scope="row">Android 8+</th><td><a href={h('{{APK}}')}><code>kiwu-android-0.1.0.apk</code></a></td><td set:html={D.r3[0]} /><td><a href={h('{{ANDROID_RELEASE}}')} rel="noopener">android-v0.1.0</a></td><td><a href={h('{{android}}')}>{D.r3[1]}</a></td></tr>
+    </tbody>
+  </table></div>
+  <p set:html={h(D.tableP)} />
+  <h2>{D.before}</h2>
+  <ul>{D.bl.map((i) => <li set:html={h(i)} />)}</ul>
+</Page>

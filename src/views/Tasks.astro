@@ -1,0 +1,43 @@
+---
+import Page from '../layouts/Page.astro';
+import Shot from '../components/Shot.astro';
+import portada from '../assets/portada.png';
+import tablero from '../assets/tablero.png';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Tareas y tablero para estudiantes', h1: 'Tareas y tablero', description: 'Organiza tus deberes por materia en Kiwu: fechas y horas, recordatorios locales, vistas Hoy y Próximos 7 días, y un tablero Por hacer, En curso y Hecho con arrastrar y soltar.',
+    lead: 'Kiwu ordena tus deberes por materia y te deja verlos como lista o como tablero.',
+    h1a: 'Listas por materia', p1: 'Crea una lista por materia y añade deberes con fecha y hora. Las vistas <em>Hoy</em>, <em>Próximos 7 días</em>, <em>Todas las tareas</em> y <em>Completadas</em> te muestran lo que toca sin revisar cada lista.',
+    alt1: 'Kiwu en modo lista con la barra lateral de vistas (Hoy, Próximos 7 días, Calendario, Todas las tareas) y la lista Universidad', cap1: 'Modo lista, con las vistas en la barra lateral.',
+    h2a: 'Tablero', p2: 'Cambia a tablero con las tres columnas <em>Por hacer</em>, <em>En curso</em> y <em>Hecho</em> y arrastra las tareas entre ellas.', alt2: 'Kiwu en modo tablero con tareas en la columna Por hacer', cap2: 'Modo tablero.',
+    h3a: 'Recordatorios', p3: 'Los recordatorios son locales: en Android llegan como notificaciones con «Completar» y «Posponer 1 h», en macOS usan las notificaciones del sistema y en Linux las del escritorio (necesitas un demonio de notificaciones como mako). En Linux solo salen si Kiwu está en marcha; hay un modo sin ventana (<code>kiwu --segundo-plano</code>). Ver <a href="{{linux}}">Kiwu en Linux</a>.',
+    next: 'Siguiente: <a href="{{calendar}}">el calendario</a> y <a href="{{notes}}">las notas</a>.' },
+  en: { title: 'Tasks and board for students', h1: 'Tasks and board', description: 'Organize your homework by subject in Kiwu: dates and times, local reminders, Today and Next 7 days views, and a To do, In progress and Done board with drag and drop.',
+    lead: 'Kiwu organizes your homework by subject and lets you see it as a list or a board.',
+    h1a: 'Lists by subject', p1: 'Create a list per subject and add assignments with a date and time. The <em>Today</em>, <em>Next 7 days</em>, <em>All tasks</em> and <em>Completed</em> views show what is due without checking every list.',
+    alt1: 'Kiwu in list mode with the views sidebar (Today, Next 7 days, Calendar, All tasks) and the University list', cap1: 'List mode, with the views in the sidebar.',
+    h2a: 'Board', p2: 'Switch to the board with the three columns <em>To do</em>, <em>In progress</em> and <em>Done</em> and drag tasks between them.', alt2: 'Kiwu in board mode with tasks in the To do column', cap2: 'Board mode.',
+    h3a: 'Reminders', p3: 'Reminders are local: on Android they arrive as notifications with “Complete” and “Snooze 1 h”, on macOS they use system notifications and on Linux desktop notifications (you need a notification daemon such as mako). On Linux they only fire if Kiwu is running; there is a windowless mode (<code>kiwu --segundo-plano</code>). See <a href="{{linux}}">Kiwu on Linux</a>.',
+    next: 'Next: <a href="{{calendar}}">the calendar</a> and <a href="{{notes}}">notes</a>.' },
+  pt: { title: 'Tarefas e quadro para estudantes', h1: 'Tarefas e quadro', description: 'Organize seus trabalhos por disciplina no Kiwu: datas e horários, lembretes locais, visões Hoje e Próximos 7 dias, e um quadro A fazer, Em andamento e Feito com arrastar e soltar.',
+    lead: 'O Kiwu organiza seus trabalhos por disciplina e deixa você vê-los como lista ou como quadro.',
+    h1a: 'Listas por disciplina', p1: 'Crie uma lista por disciplina e adicione trabalhos com data e hora. As visões <em>Hoje</em>, <em>Próximos 7 dias</em>, <em>Todas as tarefas</em> e <em>Concluídas</em> mostram o que vence sem precisar revisar cada lista.',
+    alt1: 'Kiwu no modo lista com a barra lateral de visões (Hoje, Próximos 7 dias, Calendário, Todas as tarefas) e a lista Universidade', cap1: 'Modo lista, com as visões na barra lateral.',
+    h2a: 'Quadro', p2: 'Mude para o quadro com as três colunas <em>A fazer</em>, <em>Em andamento</em> e <em>Feito</em> e arraste as tarefas entre elas.', alt2: 'Kiwu no modo quadro com tarefas na coluna A fazer', cap2: 'Modo quadro.',
+    h3a: 'Lembretes', p3: 'Os lembretes são locais: no Android chegam como notificações com «Concluir» e «Adiar 1 h», no macOS usam as notificações do sistema e no Linux as do desktop (você precisa de um daemon de notificações como o mako). No Linux só aparecem se o Kiwu estiver em execução; há um modo sem janela (<code>kiwu --segundo-plano</code>). Veja <a href="{{linux}}">Kiwu no Linux</a>.',
+    next: 'Próximo: <a href="{{calendar}}">o calendário</a> e <a href="{{notes}}">as anotações</a>.' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <h2>{D.h1a}</h2>
+  <p set:html={h(D.p1)} />
+  <figure><Shot src={portada} alt={D.alt1} /><figcaption>{D.cap1}</figcaption></figure>
+  <h2>{D.h2a}</h2>
+  <p set:html={h(D.p2)} />
+  <figure><Shot src={tablero} alt={D.alt2} /><figcaption>{D.cap2}</figcaption></figure>
+  <h2>{D.h3a}</h2>
+  <p set:html={h(D.p3)} />
+  <p set:html={h(D.next)} />
+</Page>

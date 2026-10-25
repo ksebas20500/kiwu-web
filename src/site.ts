@@ -13,13 +13,3 @@ export const ISSUES = `${REPO}/issues`;
 export const RAW = 'https://raw.githubusercontent.com/ksebas20500/kiwu/main';
 export const INSTALL_CMD = `curl -fsSL ${RAW}/install.sh | bash`;
 export const SITE_URL_SET = Boolean(process.env.SITE_URL);
-export const nav = [
-  { href: '/funciones/', label: 'Funciones' },
-  { href: '/android/', label: 'Android' },
-  { href: '/para-estudiantes/', label: 'Para estudiantes' },
-  { href: '/instalar/', label: 'Instalar' },
-  { href: '/macos/', label: 'macOS' },
-  { href: '/linux/', label: 'Linux' },
-  { href: '/privacidad/', label: 'Privacidad' },
-  { href: '/preguntas-frecuentes/', label: 'Preguntas' },
-];

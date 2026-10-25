@@ -1,19 +1,21 @@
 ---
 // Bloque de comando con botón de copiar (mejora progresiva: sin JS sigue siendo texto seleccionable).
-const { cmd, label } = Astro.props;
+import { ui, type Lang } from '../i18n';
+const { cmd, label, lang = 'es' } = Astro.props as { cmd: string; label: string; lang?: Lang };
+const t = ui[lang];
 ---
 <div class="cmd">
   <pre tabindex="0" aria-label={label}><code>{cmd}</code></pre>
-  <button type="button" class="copy" data-copy={cmd} hidden>Copiar</button>
+  <button type="button" class="copy" data-copy={cmd} data-label={t.copy} data-done={t.copied} data-fail={t.copyFail} hidden>{t.copy}</button>
 </div>
 <script>
   document.querySelectorAll<HTMLButtonElement>('.copy[data-copy]').forEach((b) => {
     if (!navigator.clipboard) return;
     b.hidden = false;
     b.addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(b.dataset.copy ?? ''); b.textContent = 'Copiado'; }
-      catch { b.textContent = 'Selecciona y copia'; }
-      setTimeout(() => (b.textContent = 'Copiar'), 2000);
+      try { await navigator.clipboard.writeText(b.dataset.copy ?? ''); b.textContent = b.dataset.done ?? ''; }
+      catch { b.textContent = b.dataset.fail ?? ''; }
+      setTimeout(() => (b.textContent = b.dataset.label ?? ''), 2000);
     });
   });
 </script>

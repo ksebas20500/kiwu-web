@@ -1,0 +1,149 @@
+---
+import Base from '../layouts/Base.astro';
+import Shot from '../components/Shot.astro';
+import banner from '../assets/vista-previa.png';
+import tablero from '../assets/tablero.png';
+import calendario from '../assets/calendario.png';
+import aTareas from '../assets/android/tareas.png';
+import aCalendario from '../assets/android/calendario.png';
+import aNotas from '../assets/android/notas.png';
+import aHorario from '../assets/android/horario-semana.png';
+import { REPO } from '../site';
+import { fill, htmlLang, path, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Kiwu: tareas, calendario, horario y apuntes para estudiantes, en Android',
+    description: 'Kiwu es una app libre para Android (y macOS y Linux) con tareas, calendario, horario semanal y notas por bloques. Sin cuenta ni nube: hazte tester en Google Play.',
+    ld: 'Aplicación para estudiantes, primero en Android y también en escritorio: tareas por materia, calendario, horario semanal y notas por bloques, con los datos guardados en tu dispositivo.',
+    h1: 'Tu vida académica, en tu bolsillo.', lead: 'Kiwu es una app de código abierto para Android que reúne tus deberes por materia, un calendario de entregas, tu horario semanal y notas por bloques. No necesita cuenta ni nube.',
+    b1: 'Ser tester en Google Play', b2: 'Ver Android y descargar APK',
+    small: 'Android 8 o superior · Prueba cerrada en Google Play · También en <a href="{{macos}}">macOS</a> y <a href="{{linux}}">Linux</a> · Licencia MIT',
+    bannerAlt: 'Kiwu, un gato mago sobre un degradado violeta y azul, con la etiqueta Gratis',
+    alts: ['Kiwu en Android: lista de tareas por materia', 'Kiwu en Android: calendario mensual con entregas', 'Kiwu en Android: horario semanal', 'Kiwu en Android: editor de notas por bloques'],
+    fh: 'Lo que hace Kiwu', cards: [
+      ['Tareas por materia', 'Listas con fecha y hora, recordatorios locales con «Completar» y «Posponer» y vistas <em>Hoy</em>, <em>Próximos 7 días</em>, <em>Todas</em> y <em>Completadas</em>. <a href="{{tasks}}">Ver tareas y tablero</a>.'],
+      ['Calendario y horario', 'Un mes con tus entregas y un horario semanal con tarjeta «Ahora / Siguiente» y aviso de choques. <a href="{{calendar}}">Ver el calendario</a>.'],
+      ['Notas por bloques', 'Cuadernos, páginas, menú <code>/</code>, código con colores y enlaces con vista previa. <a href="{{notes}}">Ver las notas</a>.']],
+    ph: 'Privacidad local', pp: 'Kiwu no tiene servidor, cuentas, publicidad ni analíticas, y tus datos viven en tu dispositivo. La app solo se conecta a Internet cuando pegas un enlace en una nota, para obtener su vista previa o reproducir un vídeo compatible (YouTube o Vimeo).',
+    pl: '<a href="{{privacy}}">Leer los detalles de privacidad</a> · <a href="{{nocloud}}">Qué implica un organizador sin nube</a>', pAlt: 'Kiwu en Android: notas guardadas en el dispositivo',
+    ch: 'Hazte tester en Google Play', cp: 'Deja el correo de tu cuenta de Google y te damos acceso a la prueba cerrada para instalar Kiwu desde la tienda.', cb1: 'Quiero ser tester', cb2: 'Descargar el APK',
+    dh: 'También en escritorio', dp: 'Kiwu nació en el escritorio y sigue disponible para macOS y Linux, con tablero, widgets (macOS 14+) y los mismos datos exportables entre sistemas.',
+    altT: 'Kiwu en escritorio, modo tablero: Por hacer, En curso y Hecho', altC: 'Kiwu en escritorio: calendario mensual con las entregas',
+    macP: 'App nativa en SwiftUI para macOS 13 o superior, con widgets en macOS 14+. No está notarizada por Apple: la primera vez tendrás que autorizarla.', macL: 'Instalar en macOS',
+    linP: 'App GTK4 + libadwaita, pensada para Arch Linux con Hyprland. Versión 0.1.0 experimental, sin widgets.', linL: 'Estado en Linux',
+    oh: 'Código abierto', op: 'Kiwu se distribuye bajo licencia MIT y su código está en <a href="{{REPO}}" rel="noopener">GitHub</a>. Puedes revisarlo, compilarlo tú mismo o abrir un <i lang="en">issue</i> con errores e ideas. <a href="{{license}}">Ver la licencia</a> · <a href="{{install}}">Todas las formas de instalar</a>.' },
+  en: { title: 'Kiwu: tasks, calendar, timetable and notes for students, on Android',
+    description: 'Kiwu is a free app for Android (and macOS and Linux) with tasks, calendar, weekly timetable and block-based notes. No account or cloud: become a tester on Google Play.',
+    ld: 'An app for students, Android first and also on desktop: tasks by subject, calendar, weekly timetable and block-based notes, with your data stored on your device.',
+    h1: 'Your academic life, in your pocket.', lead: 'Kiwu is an open-source Android app that brings together your homework by subject, a deadline calendar, your weekly timetable and block-based notes. No account or cloud needed.',
+    b1: 'Become a tester on Google Play', b2: 'See Android and download the APK',
+    small: 'Android 8 or later · Closed test on Google Play · Also on <a href="{{macos}}">macOS</a> and <a href="{{linux}}">Linux</a> · MIT license',
+    bannerAlt: 'Kiwu, a wizard cat on a violet and blue gradient, with a Free label',
+    alts: ['Kiwu on Android: task list by subject', 'Kiwu on Android: monthly calendar with deadlines', 'Kiwu on Android: weekly timetable', 'Kiwu on Android: block-based notes editor'],
+    fh: 'What Kiwu does', cards: [
+      ['Tasks by subject', 'Lists with date and time, local reminders with “Complete” and “Snooze” and <em>Today</em>, <em>Next 7 days</em>, <em>All</em> and <em>Completed</em> views. <a href="{{tasks}}">See tasks and board</a>.'],
+      ['Calendar and timetable', 'A month with your deadlines and a weekly timetable with a “Now / Next” card and clash warnings. <a href="{{calendar}}">See the calendar</a>.'],
+      ['Block-based notes', 'Notebooks, pages, a <code>/</code> menu, color-highlighted code and link previews. <a href="{{notes}}">See the notes</a>.']],
+    ph: 'Local privacy', pp: 'Kiwu has no server, accounts, ads or analytics, and your data lives on your device. The app only connects to the internet when you paste a link into a note, to fetch its preview or play a compatible video (YouTube or Vimeo).',
+    pl: '<a href="{{privacy}}">Read the privacy details</a> · <a href="{{nocloud}}">What a planner without the cloud means</a>', pAlt: 'Kiwu on Android: notes stored on the device',
+    ch: 'Become a tester on Google Play', cp: 'Leave your Google account email and we will give you access to the closed test so you can install Kiwu from the store.', cb1: 'I want to be a tester', cb2: 'Download the APK',
+    dh: 'Also on desktop', dp: 'Kiwu started on the desktop and is still available for macOS and Linux, with a board, widgets (macOS 14+) and the same data exportable between systems.',
+    altT: 'Kiwu on desktop, board mode: To do, In progress and Done', altC: 'Kiwu on desktop: monthly calendar with deadlines',
+    macP: 'A native SwiftUI app for macOS 13 or later, with widgets on macOS 14+. It is not notarized by Apple: you will need to authorize it the first time.', macL: 'Install on macOS',
+    linP: 'GTK4 + libadwaita app, designed for Arch Linux with Hyprland. Experimental version 0.1.0, no widgets.', linL: 'Status on Linux',
+    oh: 'Open source', op: 'Kiwu is distributed under the MIT license and its code is on <a href="{{REPO}}" rel="noopener">GitHub</a>. You can review it, build it yourself or open an <i>issue</i> with bugs and ideas. <a href="{{license}}">See the license</a> · <a href="{{install}}">All ways to install</a>.' },
+  pt: { title: 'Kiwu: tarefas, calendário, horário e anotações para estudantes, no Android',
+    description: 'O Kiwu é um app livre para Android (e macOS e Linux) com tarefas, calendário, horário semanal e anotações em blocos. Sem conta nem nuvem: seja testador no Google Play.',
+    ld: 'Aplicativo para estudantes, primeiro no Android e também no desktop: tarefas por disciplina, calendário, horário semanal e anotações em blocos, com os dados guardados no seu dispositivo.',
+    h1: 'Sua vida acadêmica, no seu bolso.', lead: 'O Kiwu é um app de código aberto para Android que reúne seus trabalhos por disciplina, um calendário de entregas, seu horário semanal e anotações em blocos. Não precisa de conta nem de nuvem.',
+    b1: 'Ser testador no Google Play', b2: 'Ver o Android e baixar o APK',
+    small: 'Android 8 ou superior · Teste fechado no Google Play · Também no <a href="{{macos}}">macOS</a> e no <a href="{{linux}}">Linux</a> · Licença MIT',
+    bannerAlt: 'Kiwu, um gato mago sobre um degradê violeta e azul, com a etiqueta Grátis',
+    alts: ['Kiwu no Android: lista de tarefas por disciplina', 'Kiwu no Android: calendário mensal com entregas', 'Kiwu no Android: horário semanal', 'Kiwu no Android: editor de anotações em blocos'],
+    fh: 'O que o Kiwu faz', cards: [
+      ['Tarefas por disciplina', 'Listas com data e hora, lembretes locais com «Concluir» e «Adiar» e visões <em>Hoje</em>, <em>Próximos 7 dias</em>, <em>Todas</em> e <em>Concluídas</em>. <a href="{{tasks}}">Ver tarefas e quadro</a>.'],
+      ['Calendário e horário', 'Um mês com suas entregas e um horário semanal com cartão «Agora / Próxima» e aviso de conflitos. <a href="{{calendar}}">Ver o calendário</a>.'],
+      ['Anotações em blocos', 'Cadernos, páginas, menu <code>/</code>, código colorido e links com prévia. <a href="{{notes}}">Ver as anotações</a>.']],
+    ph: 'Privacidade local', pp: 'O Kiwu não tem servidor, contas, publicidade nem análises, e seus dados ficam no seu dispositivo. O app só se conecta à internet quando você cola um link em uma anotação, para obter a prévia ou reproduzir um vídeo compatível (YouTube ou Vimeo).',
+    pl: '<a href="{{privacy}}">Ler os detalhes de privacidade</a> · <a href="{{nocloud}}">O que significa um organizador sem nuvem</a>', pAlt: 'Kiwu no Android: anotações salvas no dispositivo',
+    ch: 'Seja testador no Google Play', cp: 'Deixe o e-mail da sua conta Google e damos acesso ao teste fechado para você instalar o Kiwu pela loja.', cb1: 'Quero ser testador', cb2: 'Baixar o APK',
+    dh: 'Também no desktop', dp: 'O Kiwu nasceu no desktop e continua disponível para macOS e Linux, com quadro, widgets (macOS 14+) e os mesmos dados exportáveis entre sistemas.',
+    altT: 'Kiwu no desktop, modo quadro: A fazer, Em andamento e Feito', altC: 'Kiwu no desktop: calendário mensal com as entregas',
+    macP: 'App nativo em SwiftUI para macOS 13 ou superior, com widgets no macOS 14+. Não é notarizado pela Apple: na primeira vez você precisará autorizá-lo.', macL: 'Instalar no macOS',
+    linP: 'App GTK4 + libadwaita, pensado para Arch Linux com Hyprland. Versão 0.1.0 experimental, sem widgets.', linL: 'Estado no Linux',
+    oh: 'Código aberto', op: 'O Kiwu é distribuído sob a licença MIT e seu código está no <a href="{{REPO}}" rel="noopener">GitHub</a>. Você pode revisá-lo, compilá-lo você mesmo ou abrir uma <i lang="en">issue</i> com erros e ideias. <a href="{{license}}">Ver a licença</a> · <a href="{{install}}">Todas as formas de instalar</a>.' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+const site = Astro.site!.href.replace(/\/$/, '');
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Kiwu', url: `${site}${path(lang, 'home')}`, inLanguage: htmlLang[lang] },
+  {
+    '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'Kiwu', description: D.ld,
+    applicationCategory: 'ProductivityApplication', operatingSystem: 'Android 8+, macOS 13+, Linux (GTK4, libadwaita)',
+    url: `${site}${path(lang, 'home')}`, downloadUrl: `${site}${path(lang, 'install')}`, license: 'https://opensource.org/licenses/MIT', inLanguage: htmlLang[lang],
+    author: { '@type': 'Person', name: 'Kevin Sebastián Medina Nava' }, codeRepository: REPO,
+  },
+];
+const phones = [aTareas, aCalendario, aHorario, aNotas];
+---
+<Base lang={lang} route={route} title={D.title} description={D.description} jsonLd={jsonLd}>
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <h1>{D.h1}</h1>
+        <p class="lead">{D.lead}</p>
+        <div class="actions">
+          <a class="btn primary" href={h('{{TESTER}}')} rel="noopener">{D.b1}</a>
+          <a class="btn secondary" href={h('{{android}}')}>{D.b2}</a>
+        </div>
+        <p class="small" set:html={h(D.small)} />
+      </div>
+      <Shot class="banner" src={banner} eager alt={D.bannerAlt} />
+      <div class="gallery phones">
+        {phones.map((img, i) => <Shot src={img} sizes="240px" alt={D.alts[i]} />)}
+      </div>
+    </section>
+
+    <section aria-labelledby="funciones">
+      <h2 id="funciones">{D.fh}</h2>
+      <ul class="cards">
+        {D.cards.map(([t, p]) => <li class="card"><h3>{t}</h3><p set:html={h(p)} /></li>)}
+      </ul>
+    </section>
+
+    <section class="split" id="privacidad">
+      <div>
+        <h2>{D.ph}</h2>
+        <p>{D.pp}</p>
+        <p set:html={h(D.pl)} />
+      </div>
+      <Shot src={aNotas} alt={D.pAlt} sizes="(min-width: 860px) 300px, 60vw" class="phone" />
+    </section>
+
+    <section class="cta">
+      <h2>{D.ch}</h2>
+      <p>{D.cp}</p>
+      <div class="actions"><a class="btn primary" href={h('{{TESTER}}')} rel="noopener">{D.cb1}</a><a class="btn secondary" href={h('{{android}}')}>{D.cb2}</a></div>
+    </section>
+
+    <section aria-labelledby="escritorio">
+      <h2 id="escritorio">{D.dh}</h2>
+      <p>{D.dp}</p>
+      <div class="split">
+        <Shot src={tablero} alt={D.altT} sizes="(min-width: 860px) 600px, 100vw" />
+        <div>
+          <Shot src={calendario} alt={D.altC} sizes="(min-width: 860px) 600px, 100vw" />
+        </div>
+      </div>
+      <div class="cards">
+        <div class="card"><h3>macOS</h3><p>{D.macP}</p><p><a href={h('{{macos}}')}>{D.macL}</a></p></div>
+        <div class="card"><h3>Linux</h3><p>{D.linP}</p><p><a href={h('{{linux}}')}>{D.linL}</a></p></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="oss">
+      <h2 id="oss">{D.oh}</h2>
+      <p set:html={h(D.op)} />
+    </section>
+  </div>
+</Base>

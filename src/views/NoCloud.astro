@@ -1,0 +1,62 @@
+---
+import Page from '../layouts/Page.astro';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Organizador universitario sin nube ni cuenta: qué implica', h1: 'Organizador sin nube: qué ganas y qué renuncias',
+    description: 'Qué significa usar un organizador de tareas y notas sin cuenta ni nube, como Kiwu: privacidad, funcionamiento sin conexión y las limitaciones reales, como no sincronizar entre dispositivos.',
+    lead: 'Kiwu guarda todo en tu dispositivo (teléfono o equipo). Eso tiene ventajas claras y también límites que conviene conocer antes de elegirlo.',
+    gain: 'Qué ganas', gainItems: [
+      '<strong>Sin cuenta.</strong> Instalas y empiezas; no hay registro ni contraseña.',
+      '<strong>Tus datos en tu equipo.</strong> Kiwu no tiene servidor, publicidad ni analíticas. Ver <a href="{{privacy}}">privacidad</a>.',
+      '<strong>Funciona sin depender de un servicio.</strong> Tus tareas y notas se guardan localmente. Solo se usa Internet para la vista previa de enlaces y los vídeos incrustados.',
+      '<strong>Código abierto (MIT).</strong> Puedes revisar qué hace la app y compilarla tú mismo.'],
+    lose: 'A qué renuncias', loseItems: [
+      '<strong>No hay sincronización entre dispositivos.</strong> La sincronización entre Macs (iCloud) figura como pendiente en la documentación del proyecto.',
+      '<strong>No hay colaboración.</strong> Kiwu es personal, no un espacio de trabajo compartido.',
+      '<strong>No hay versión web.</strong> Hay app para Android, macOS y Linux.',
+      '<strong>Las copias de seguridad son cosa tuya.</strong> Si los datos viven en tu dispositivo, respáldalos con tu sistema habitual. Kiwu exporta copias <code>.kiwu.json</code> y en macOS puedes copiar la carpeta <code>~/Library/Application Support/Kiwu</code>.'],
+    forYou: '¿Es para ti?', p1: 'Si vienes de aplicaciones con cuenta y nube (como Notion o Todoist) y lo que más necesitas es organizar tus propias tareas, calendario y apuntes con privacidad, Kiwu encaja. Si necesitas trabajar en grupo o abrir tus mismos datos en varios dispositivos a la vez, hoy no es la herramienta adecuada.',
+    p2: 'Mira <a href="{{students}}">cómo organizar un semestre con Kiwu</a> o <a href="{{install}}">instálalo</a>. Dudas: <a href="{{faq}}">preguntas frecuentes</a>.' },
+  en: { title: 'A university planner with no cloud or account: what it means', h1: 'A planner without the cloud: what you gain and what you give up',
+    description: 'What it means to use a task and notes planner with no account or cloud, like Kiwu: privacy, offline use and the real limits, such as no syncing between devices.',
+    lead: 'Kiwu keeps everything on your device (phone or computer). That has clear advantages and also limits worth knowing before you choose it.',
+    gain: 'What you gain', gainItems: [
+      '<strong>No account.</strong> Install and start; no sign-up or password.',
+      '<strong>Your data stays on your device.</strong> Kiwu has no server, ads or analytics. See <a href="{{privacy}}">privacy</a>.',
+      '<strong>Works without depending on a service.</strong> Your tasks and notes are stored locally. The internet is only used for link previews and embedded videos.',
+      '<strong>Open source (MIT).</strong> You can review what the app does and build it yourself.'],
+    lose: 'What you give up', loseItems: [
+      '<strong>No syncing between devices.</strong> Syncing between Macs (iCloud) is listed as pending in the project documentation.',
+      '<strong>No collaboration.</strong> Kiwu is personal, not a shared workspace.',
+      '<strong>No web version.</strong> There are apps for Android, macOS and Linux.',
+      '<strong>Backups are up to you.</strong> If your data lives on your device, back it up with your usual system. Kiwu exports <code>.kiwu.json</code> copies, and on macOS you can copy the <code>~/Library/Application Support/Kiwu</code> folder.'],
+    forYou: 'Is it for you?', p1: 'If you come from apps with accounts and a cloud (like Notion or Todoist) and what you need most is to organize your own tasks, calendar and notes with privacy, Kiwu fits. If you need to work in a group or open the same data on several devices at once, it is not the right tool today.',
+    p2: 'See <a href="{{students}}">how to organize a semester with Kiwu</a> or <a href="{{install}}">install it</a>. Questions: <a href="{{faq}}">FAQ</a>.' },
+  pt: { title: 'Organizador universitário sem nuvem nem conta: o que isso implica', h1: 'Organizador sem nuvem: o que você ganha e a que renuncia',
+    description: 'O que significa usar um organizador de tarefas e anotações sem conta nem nuvem, como o Kiwu: privacidade, uso offline e as limitações reais, como não sincronizar entre dispositivos.',
+    lead: 'O Kiwu guarda tudo no seu dispositivo (celular ou computador). Isso tem vantagens claras e também limites que vale conhecer antes de escolher.',
+    gain: 'O que você ganha', gainItems: [
+      '<strong>Sem conta.</strong> Você instala e começa; não há cadastro nem senha.',
+      '<strong>Seus dados no seu dispositivo.</strong> O Kiwu não tem servidor, publicidade nem análises. Veja <a href="{{privacy}}">privacidade</a>.',
+      '<strong>Funciona sem depender de um serviço.</strong> Suas tarefas e anotações ficam salvas localmente. A internet só é usada para a prévia de links e os vídeos incorporados.',
+      '<strong>Código aberto (MIT).</strong> Você pode revisar o que o app faz e compilá-lo você mesmo.'],
+    lose: 'A que você renuncia', loseItems: [
+      '<strong>Não há sincronização entre dispositivos.</strong> A sincronização entre Macs (iCloud) consta como pendente na documentação do projeto.',
+      '<strong>Não há colaboração.</strong> O Kiwu é pessoal, não um espaço de trabalho compartilhado.',
+      '<strong>Não há versão web.</strong> Há apps para Android, macOS e Linux.',
+      '<strong>Os backups são com você.</strong> Se os dados ficam no seu dispositivo, faça backup com o seu sistema habitual. O Kiwu exporta cópias <code>.kiwu.json</code> e, no macOS, você pode copiar a pasta <code>~/Library/Application Support/Kiwu</code>.'],
+    forYou: 'É para você?', p1: 'Se você vem de apps com conta e nuvem (como Notion ou Todoist) e o que mais precisa é organizar suas próprias tarefas, calendário e anotações com privacidade, o Kiwu serve. Se precisa trabalhar em grupo ou abrir os mesmos dados em vários dispositivos ao mesmo tempo, hoje ele não é a ferramenta certa.',
+    p2: 'Veja <a href="{{students}}">como organizar um semestre com o Kiwu</a> ou <a href="{{install}}">instale-o</a>. Dúvidas: <a href="{{faq}}">perguntas frequentes</a>.' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <h2>{D.gain}</h2>
+  <ul>{D.gainItems.map((i) => <li set:html={h(i)} />)}</ul>
+  <h2>{D.lose}</h2>
+  <ul>{D.loseItems.map((i) => <li set:html={h(i)} />)}</ul>
+  <h2>{D.forYou}</h2>
+  <p>{D.p1}</p>
+  <p set:html={h(D.p2)} />
+</Page>

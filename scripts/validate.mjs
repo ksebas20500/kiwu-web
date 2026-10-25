@@ -11,18 +11,25 @@ const titles = new Map(), descs = new Map();
 for (const p of pages) {
   const h = readFileSync(p, 'utf8'), u = urlOf(p);
   const get = (re) => h.match(re)?.[1];
-  if (!/<html lang="es"/.test(h)) errs.push(`${u}: falta lang=es`);
+  const want = u.startsWith('/en/') ? 'en' : u.startsWith('/pt-br/') ? 'pt-BR' : 'es';
+  if (u !== '/404.html' && !new RegExp(`<html lang="${want}"`).test(h)) errs.push(`${u}: lang debería ser ${want}`);
+  if (u !== '/404.html') {
+    const alts = [...h.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)].map((m) => m[1]);
+    for (const l of ['es', 'en', 'pt-BR', 'x-default']) if (!alts.includes(l)) errs.push(`${u}: falta hreflang ${l}`);
+  }
   const t = get(/<title>([^<]*)<\/title>/), d = get(/<meta name="description" content="([^"]*)"/);
   if (!t) errs.push(`${u}: sin title`); else titles.has(t) ? errs.push(`${u}: title duplicado con ${titles.get(t)}`) : titles.set(t, u);
   if (!d) errs.push(`${u}: sin description`); else descs.has(d) ? errs.push(`${u}: description duplicada con ${descs.get(d)}`) : descs.set(d, u);
   if ((h.match(/<h1[ >]/g) || []).length !== 1) errs.push(`${u}: debe haber exactamente un h1`);
   if (!/<link rel="canonical" href="https?:\/\//.test(h)) errs.push(`${u}: canonical no absoluta`);
   for (const m of h.matchAll(/<img\b[^>]*>/g)) if (!/ alt="/.test(m[0]) || !/ width="/.test(m[0]) || !/ height="/.test(m[0])) errs.push(`${u}: img sin alt/dimensiones: ${m[0].slice(0, 80)}`);
-  for (const m of h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) { try { const j = JSON.parse(m[1]); if (/aggregateRating|review|offers/i.test(m[1])) errs.push(`${u}: JSON-LD con propiedades no verificadas`); } catch { errs.push(`${u}: JSON-LD inválido`); } }
+  for (const m of h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) { try { const j = JSON.parse(m[1]); if (/"(aggregateRating|review|offers)"/i.test(m[1])) errs.push(`${u}: JSON-LD con propiedades no verificadas`); } catch { errs.push(`${u}: JSON-LD inválido`); } }
   for (const m of h.matchAll(/<a [^>]*href="(\/[^"#]*)(#[^"]*)?"/g)) { if (!known.has(m[1]) && !existsSync(join(dist, m[1]))) errs.push(`${u}: enlace roto ${m[1]}`); }
 }
 for (const f of ['robots.txt', 'sitemap-index.xml', 'og.png', 'favicon.png']) if (!existsSync(join(dist, f))) errs.push(`falta dist/${f}`);
 if (existsSync(join(dist, 'sitemap-0.xml'))) { const s = readFileSync(join(dist, 'sitemap-0.xml'), 'utf8'); if (/404/.test(s)) errs.push('sitemap incluye 404'); console.log('URLs en sitemap:', (s.match(/<loc>/g) || []).length); }
-console.log(`Páginas HTML: ${pages.length}`);
+const nPer = (pre) => pages.filter((p) => urlOf(p).startsWith(pre)).length;
+console.log(`Páginas HTML: ${pages.length} (en: ${nPer('/en/')}, pt-br: ${nPer('/pt-br/')})`);
+if (nPer('/en/') !== nPer('/pt-br/')) errs.push('en y pt-br no tienen el mismo número de páginas');
 if (errs.length) { console.error('\nERRORES:\n' + errs.join('\n')); process.exit(1); }
 console.log('Validación OK');

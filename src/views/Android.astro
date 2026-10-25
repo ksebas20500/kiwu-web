@@ -1,0 +1,101 @@
+---
+import Page from '../layouts/Page.astro';
+import Shot from '../components/Shot.astro';
+import tareas from '../assets/android/tareas.png';
+import calendario from '../assets/android/calendario.png';
+import notas from '../assets/android/notas.png';
+import horarioDia from '../assets/android/horario-dia.png';
+import horarioSemana from '../assets/android/horario-semana.png';
+import ajustes from '../assets/android/ajustes.png';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Kiwu para Android: requisitos, instalación y estado', h1: 'Kiwu para Android',
+    description: 'Kiwu para Android 0.1.0 (versión de prueba): prueba cerrada en Google Play, requisitos de Android 8 o superior, instalación del APK, horario semanal, recordatorios y próximas mejoras.',
+    lead: 'App nativa de Android hecha con Kotlin y Jetpack Compose. Tiene las mismas funciones que la de escritorio (sin widgets) y añade un horario semanal.',
+    status: '<strong>Estado: versión de prueba (0.1.0).</strong> Está en preparación para Google Play (prueba cerrada) y el nombre y el identificador de la app son provisionales. El release está publicado como <i lang="en">pre-release</i>. Si algo falla, avísanos en <a href="{{ISSUES}}" rel="noopener">GitHub</a>.',
+    th: 'Prueba cerrada en Google Play', tp: 'Deja tu correo y te damos acceso como tester para instalar Kiwu desde Google Play y recibir las actualizaciones automáticamente.',
+    steps: ['Rellena el formulario con el correo de tu <strong>cuenta de Google</strong> (la que usas en Play Store).', 'Te añadimos a la lista de testers y te avisamos.', 'Abre el enlace de la prueba, acepta la invitación e instala Kiwu desde Google Play.'],
+    tbtn: 'Quiero ser tester', tsmall: 'Tu correo solo se usa para la invitación a la prueba y se guarda en Google Forms. ¿Prefieres no esperar? Abajo tienes el APK.',
+    shots: ['Tareas', 'Calendario', 'Notas', 'Horario (día)', 'Horario (semana)', 'Ajustes'],
+    alts: ['Kiwu en Android: lista de tareas por materia', 'Kiwu en Android: calendario mensual con entregas', 'Kiwu en Android: editor de notas por bloques', 'Kiwu en Android: horario en vista de día', 'Kiwu en Android: horario en vista de semana', 'Kiwu en Android: ajustes de tema y color'],
+    req: 'Requisitos', reqItems: ['Android 8.0 (API 26) o superior.', 'Permiso de notificaciones para los recordatorios y, en Android 12 o superior, «Alarmas exactas» (Ajustes → Recordatorios) para que los avisos suenen a la hora exacta.'],
+    dl: 'Descargar e instalar', dbtn: 'Descargar kiwu-android-0.1.0.apk',
+    dsmall: 'Versión optimizada (unos 2 MB). Página de la versión: <a href="{{ANDROID_RELEASE}}" rel="noopener">android-v0.1.0</a>. Todas las versiones: <a href="{{RELEASES}}" rel="noopener">GitHub Releases</a>.',
+    inst: ['Descarga el APK en el teléfono y ábrelo.', 'Android pedirá permiso para «instalar apps de fuentes desconocidas» a tu navegador o gestor de archivos; concédelo.', 'Al abrir Kiwu, acepta las notificaciones si quieres recordatorios.', 'Opcional: comprueba la descarga con <a href="{{SUMS}}"><code>SHA256SUMS.txt</code></a> (<code>sha256sum -c SHA256SUMS.txt</code> en Linux/macOS o <code>Get-FileHash</code> en PowerShell).'],
+    warn: '<strong>Haz una copia antes de cambiar de APK.</strong> Los APK van firmados con la clave de depuración. Uno compilado en otro equipo no se instala encima de este sin desinstalar antes, y al desinstalar se pierden los datos. Exporta una copia desde <em>Ajustes → Exportar</em>.',
+    dbg: 'El release incluye también una versión de depuración (<code>-debug.apk</code>, unos 18 MB), más lenta y pensada solo para diagnosticar fallos. Se puede instalar a la vez, pero no comparte datos con la optimizada.',
+    inc: 'Qué incluye', incItems: ['<strong>Tareas:</strong> listas por materia, fecha y hora de entrega, vistas Hoy, Próximos 7 días, Todas y Completadas, y tablero (Por hacer · En curso · Hecho) en pantallas anchas.', '<strong>Calendario:</strong> mes completo con las entregas como puntos de colores y el detalle del día debajo.', '<strong>Notas:</strong> cuadernos, páginas, favoritas y búsqueda; editor por bloques con menú «/», formato en línea, enlaces con vista previa, vídeo, imágenes y archivos adjuntos.', '<strong>Horario:</strong> varios horarios, clases en varios días, vista de día o de semana, tarjeta «Ahora / Siguiente», aviso de choques y avisos opcionales antes de cada clase.', '<strong>Archivos por lista:</strong> una carpeta del dispositivo vinculada a cada lista; los archivos no se copian.', '<strong>Recordatorios:</strong> notificaciones con «Completar» y «Posponer 1 h»; se reprograman al reiniciar el teléfono.', '<strong>Ajustes:</strong> tema claro, oscuro o del sistema, color de la app a elección y fondo de imagen.'],
+    data: 'Tus datos', datap: 'Todo se guarda solo en el dispositivo: sin cuentas, servidor, publicidad ni analíticas. Internet se usa únicamente para descargar la vista previa de los enlaces que pegas en una nota. La copia de seguridad <code>.kiwu.json</code> tiene el mismo formato que en macOS y Linux, así que puedes mover tus datos entre sistemas. Más en <a href="{{nocloud}}">sin nube</a> y <a href="{{privacy}}">privacidad</a>.',
+    next: 'Qué viene después', nextItems: ['Sin sincronización entre dispositivos todavía (está planificada).', 'Sin widgets.', 'El tablero todavía no está en la versión móvil.', 'La app está solo en español.'],
+    foot: 'Siguiente: <a href="{{install}}">todas las formas de instalar</a> · <a href="{{faq}}">preguntas frecuentes</a> · <a href="{{REPO}}" rel="noopener">código en GitHub</a>.' },
+  en: { title: 'Kiwu for Android: requirements, installation and status', h1: 'Kiwu for Android',
+    description: 'Kiwu for Android 0.1.0 (test version): closed test on Google Play, Android 8 or later requirements, APK installation, weekly timetable, reminders and upcoming improvements.',
+    lead: 'A native Android app built with Kotlin and Jetpack Compose. It has the same features as the desktop app (without widgets) and adds a weekly timetable.',
+    status: '<strong>Status: test version (0.1.0).</strong> It is being prepared for Google Play (closed test) and the app’s name and identifier are provisional. The release is published as a <i>pre-release</i>. If something fails, let us know on <a href="{{ISSUES}}" rel="noopener">GitHub</a>.',
+    th: 'Closed test on Google Play', tp: 'Leave your email and we will give you tester access so you can install Kiwu from Google Play and get updates automatically.',
+    steps: ['Fill in the form with the email of your <strong>Google account</strong> (the one you use on the Play Store).', 'We add you to the tester list and let you know.', 'Open the test link, accept the invitation and install Kiwu from Google Play.'],
+    tbtn: 'I want to be a tester', tsmall: 'Your email is only used for the test invitation and is stored in Google Forms. Prefer not to wait? The APK is below.',
+    shots: ['Tasks', 'Calendar', 'Notes', 'Timetable (day)', 'Timetable (week)', 'Settings'],
+    alts: ['Kiwu on Android: task list by subject', 'Kiwu on Android: monthly calendar with deadlines', 'Kiwu on Android: block-based notes editor', 'Kiwu on Android: timetable in day view', 'Kiwu on Android: timetable in week view', 'Kiwu on Android: theme and color settings'],
+    req: 'Requirements', reqItems: ['Android 8.0 (API 26) or later.', 'Notification permission for reminders and, on Android 12 or later, “Alarms & reminders” (Settings → Reminders) so alerts ring at the exact time.'],
+    dl: 'Download and install', dbtn: 'Download kiwu-android-0.1.0.apk',
+    dsmall: 'Optimized build (about 2 MB). Release page: <a href="{{ANDROID_RELEASE}}" rel="noopener">android-v0.1.0</a>. All versions: <a href="{{RELEASES}}" rel="noopener">GitHub Releases</a>.',
+    inst: ['Download the APK on your phone and open it.', 'Android will ask permission to “install apps from unknown sources” for your browser or file manager; grant it.', 'When you open Kiwu, accept notifications if you want reminders.', 'Optional: verify the download with <a href="{{SUMS}}"><code>SHA256SUMS.txt</code></a> (<code>sha256sum -c SHA256SUMS.txt</code> on Linux/macOS or <code>Get-FileHash</code> in PowerShell).'],
+    warn: '<strong>Back up before switching APKs.</strong> The APKs are signed with the debug key. One built on another computer will not install over this one without uninstalling first, and uninstalling erases the data. Export a copy from <em>Settings → Export</em>.',
+    dbg: 'The release also includes a debug build (<code>-debug.apk</code>, about 18 MB), slower and meant only for diagnosing problems. It can be installed alongside, but does not share data with the optimized one.',
+    inc: 'What it includes', incItems: ['<strong>Tasks:</strong> lists by subject, due date and time, Today, Next 7 days, All and Completed views, and a board (To do · In progress · Done) on wide screens.', '<strong>Calendar:</strong> full month with deadlines as colored dots and the day’s detail below.', '<strong>Notes:</strong> notebooks, pages, favorites and search; block editor with a “/” menu, inline formatting, link previews, video, images and attached files.', '<strong>Timetable:</strong> several timetables, classes on several days, day or week view, a “Now / Next” card, clash warnings and optional alerts before each class.', '<strong>Files per list:</strong> a folder on the device linked to each list; files are not copied.', '<strong>Reminders:</strong> notifications with “Complete” and “Snooze 1 h”; rescheduled when the phone restarts.', '<strong>Settings:</strong> light, dark or system theme, app color of your choice and background image.'],
+    data: 'Your data', datap: 'Everything is stored only on the device: no accounts, server, ads or analytics. The internet is only used to download the preview of links you paste into a note. The <code>.kiwu.json</code> backup has the same format as on macOS and Linux, so you can move your data between systems. More in <a href="{{nocloud}}">no cloud</a> and <a href="{{privacy}}">privacy</a>.',
+    next: 'What comes next', nextItems: ['No syncing between devices yet (it is planned).', 'No widgets.', 'The board is not in the mobile version yet.', 'The app is in Spanish only for now.'],
+    foot: 'Next: <a href="{{install}}">all ways to install</a> · <a href="{{faq}}">FAQ</a> · <a href="{{REPO}}" rel="noopener">code on GitHub</a>.' },
+  pt: { title: 'Kiwu para Android: requisitos, instalação e estado', h1: 'Kiwu para Android',
+    description: 'Kiwu para Android 0.1.0 (versão de teste): teste fechado no Google Play, requisitos do Android 8 ou superior, instalação do APK, horário semanal, lembretes e próximas melhorias.',
+    lead: 'App nativo de Android feito com Kotlin e Jetpack Compose. Tem as mesmas funções do app de desktop (sem widgets) e acrescenta um horário semanal.',
+    status: '<strong>Estado: versão de teste (0.1.0).</strong> Está sendo preparado para o Google Play (teste fechado) e o nome e o identificador do app são provisórios. O release está publicado como <i lang="en">pre-release</i>. Se algo falhar, avise-nos no <a href="{{ISSUES}}" rel="noopener">GitHub</a>.',
+    th: 'Teste fechado no Google Play', tp: 'Deixe seu e-mail e damos acesso como testador para você instalar o Kiwu pelo Google Play e receber as atualizações automaticamente.',
+    steps: ['Preencha o formulário com o e-mail da sua <strong>conta Google</strong> (a que você usa na Play Store).', 'Adicionamos você à lista de testadores e avisamos.', 'Abra o link do teste, aceite o convite e instale o Kiwu pelo Google Play.'],
+    tbtn: 'Quero ser testador', tsmall: 'Seu e-mail só é usado para o convite ao teste e fica guardado no Google Forms. Prefere não esperar? O APK está abaixo.',
+    shots: ['Tarefas', 'Calendário', 'Anotações', 'Horário (dia)', 'Horário (semana)', 'Ajustes'],
+    alts: ['Kiwu no Android: lista de tarefas por disciplina', 'Kiwu no Android: calendário mensal com entregas', 'Kiwu no Android: editor de anotações em blocos', 'Kiwu no Android: horário na visão de dia', 'Kiwu no Android: horário na visão de semana', 'Kiwu no Android: ajustes de tema e cor'],
+    req: 'Requisitos', reqItems: ['Android 8.0 (API 26) ou superior.', 'Permissão de notificações para os lembretes e, no Android 12 ou superior, «Alarmes e lembretes» (Ajustes → Lembretes) para que os avisos toquem na hora exata.'],
+    dl: 'Baixar e instalar', dbtn: 'Baixar kiwu-android-0.1.0.apk',
+    dsmall: 'Versão otimizada (cerca de 2 MB). Página da versão: <a href="{{ANDROID_RELEASE}}" rel="noopener">android-v0.1.0</a>. Todas as versões: <a href="{{RELEASES}}" rel="noopener">GitHub Releases</a>.',
+    inst: ['Baixe o APK no celular e abra-o.', 'O Android pedirá permissão para «instalar apps de fontes desconhecidas» ao seu navegador ou gerenciador de arquivos; conceda.', 'Ao abrir o Kiwu, aceite as notificações se quiser lembretes.', 'Opcional: verifique o download com <a href="{{SUMS}}"><code>SHA256SUMS.txt</code></a> (<code>sha256sum -c SHA256SUMS.txt</code> no Linux/macOS ou <code>Get-FileHash</code> no PowerShell).'],
+    warn: '<strong>Faça um backup antes de trocar de APK.</strong> Os APKs são assinados com a chave de depuração. Um compilado em outro computador não é instalado por cima deste sem desinstalar antes, e ao desinstalar os dados são perdidos. Exporte uma cópia em <em>Ajustes → Exportar</em>.',
+    dbg: 'O release inclui também uma versão de depuração (<code>-debug.apk</code>, cerca de 18 MB), mais lenta e pensada apenas para diagnosticar falhas. Pode ser instalada ao mesmo tempo, mas não compartilha dados com a otimizada.',
+    inc: 'O que inclui', incItems: ['<strong>Tarefas:</strong> listas por disciplina, data e hora de entrega, visões Hoje, Próximos 7 dias, Todas e Concluídas, e quadro (A fazer · Em andamento · Feito) em telas largas.', '<strong>Calendário:</strong> mês inteiro com as entregas como pontos coloridos e o detalhe do dia abaixo.', '<strong>Anotações:</strong> cadernos, páginas, favoritas e busca; editor de blocos com menu «/», formatação em linha, links com prévia, vídeo, imagens e arquivos anexos.', '<strong>Horário:</strong> vários horários, aulas em vários dias, visão de dia ou de semana, cartão «Agora / Próxima», aviso de conflitos e avisos opcionais antes de cada aula.', '<strong>Arquivos por lista:</strong> uma pasta do dispositivo vinculada a cada lista; os arquivos não são copiados.', '<strong>Lembretes:</strong> notificações com «Concluir» e «Adiar 1 h»; são reprogramados ao reiniciar o celular.', '<strong>Ajustes:</strong> tema claro, escuro ou do sistema, cor do app à sua escolha e imagem de fundo.'],
+    data: 'Seus dados', datap: 'Tudo fica salvo apenas no dispositivo: sem contas, servidor, publicidade nem análises. A internet é usada somente para baixar a prévia dos links que você cola em uma anotação. O backup <code>.kiwu.json</code> tem o mesmo formato do macOS e do Linux, então você pode mover seus dados entre sistemas. Mais em <a href="{{nocloud}}">sem nuvem</a> e <a href="{{privacy}}">privacidade</a>.',
+    next: 'O que vem depois', nextItems: ['Ainda sem sincronização entre dispositivos (está planejada).', 'Sem widgets.', 'O quadro ainda não está na versão móvel.', 'Por enquanto o app está apenas em espanhol.'],
+    foot: 'Próximo: <a href="{{install}}">todas as formas de instalar</a> · <a href="{{faq}}">perguntas frequentes</a> · <a href="{{REPO}}" rel="noopener">código no GitHub</a>.' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+const imgs = [tareas, calendario, notas, horarioDia, horarioSemana, ajustes];
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <div class="notice" role="note"><p set:html={h(D.status)} /></div>
+  <section class="cta" id="tester">
+    <h2>{D.th}</h2>
+    <p>{D.tp}</p>
+    <ol class="steps" style="text-align:left;max-width:34rem;margin-inline:auto">{D.steps.map((s) => <li set:html={s} />)}</ol>
+    <div class="actions"><a class="btn primary" href={h('{{TESTER}}')} rel="noopener">{D.tbtn}</a></div>
+    <p class="small">{D.tsmall}</p>
+  </section>
+  <div class="gallery">
+    {imgs.map((img, i) => <figure><Shot src={img} sizes="240px" alt={D.alts[i]} /><figcaption>{D.shots[i]}</figcaption></figure>)}
+  </div>
+  <h2>{D.req}</h2>
+  <ul>{D.reqItems.map((i) => <li>{i}</li>)}</ul>
+  <h2>{D.dl}</h2>
+  <p><a class="btn primary" href={h('{{APK}}')}>{D.dbtn}</a></p>
+  <p class="small" set:html={h(D.dsmall)} />
+  <ol>{D.inst.map((i) => <li set:html={h(i)} />)}</ol>
+  <div class="notice" role="note"><p set:html={D.warn} /></div>
+  <p class="small" set:html={D.dbg} />
+  <h2>{D.inc}</h2>
+  <ul>{D.incItems.map((i) => <li set:html={i} />)}</ul>
+  <h2>{D.data}</h2>
+  <p set:html={h(D.datap)} />
+  <h2>{D.next}</h2>
+  <ul>{D.nextItems.map((i) => <li>{i}</li>)}</ul>
+  <p set:html={h(D.foot)} />
+</Page>

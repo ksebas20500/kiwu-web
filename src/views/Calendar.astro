@@ -1,0 +1,37 @@
+---
+import Page from '../layouts/Page.astro';
+import Shot from '../components/Shot.astro';
+import calendario from '../assets/calendario.png';
+import wCal from '../assets/widgets_calendario.png';
+import { fill, type Lang, type Route } from '../i18n';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Calendario de entregas', h1: 'Calendario de entregas', description: 'El calendario mensual de Kiwu muestra tus deberes por día, con colores suaves. Está en Android, macOS y Linux; en macOS 14 o superior también hay un widget.',
+    lead: 'Tus entregas del mes en una sola vista, calculadas a partir de las fechas de tus tareas.',
+    p1: 'El calendario muestra el mes completo con las entregas en colores pastel. Con doble clic en un día lo expandes para ver todas sus tareas. No hay nada que sincronizar: usa las mismas tareas que ya tienes en tus listas.',
+    alt1: 'Calendario mensual de Kiwu con entregas marcadas en varios días', cap1: 'Vista mensual.', h2: 'Widget de calendario en macOS',
+    p2: 'En macOS 14 o superior puedes añadir el widget <em>Calendario de deberes</em> con el mes y las próximas entregas. En Linux no hay widgets por ahora.', alt2: 'Widget Calendario de deberes de Kiwu mostrando el mes y las próximas entregas',
+    rel: 'Relacionado: <a href="{{tasks}}">tareas y tablero</a> · <a href="{{macos}}">Kiwu para macOS</a>.' },
+  en: { title: 'Deadline calendar', h1: 'Deadline calendar', description: 'Kiwu’s monthly calendar shows your homework by day, in soft colors. It is on Android, macOS and Linux; on macOS 14 or later there is also a widget.',
+    lead: 'Your month’s deadlines in a single view, calculated from your tasks’ dates.',
+    p1: 'The calendar shows the whole month with deadlines in pastel colors. Double-click a day to expand it and see all its tasks. There is nothing to sync: it uses the same tasks you already have in your lists.',
+    alt1: 'Kiwu monthly calendar with deadlines marked on several days', cap1: 'Monthly view.', h2: 'Calendar widget on macOS',
+    p2: 'On macOS 14 or later you can add the <em>Homework calendar</em> widget with the month and upcoming deadlines. There are no widgets on Linux for now.', alt2: 'Kiwu Homework calendar widget showing the month and upcoming deadlines',
+    rel: 'Related: <a href="{{tasks}}">tasks and board</a> · <a href="{{macos}}">Kiwu for macOS</a>.' },
+  pt: { title: 'Calendário de entregas', h1: 'Calendário de entregas', description: 'O calendário mensal do Kiwu mostra seus trabalhos por dia, em cores suaves. Está no Android, macOS e Linux; no macOS 14 ou superior também há um widget.',
+    lead: 'As entregas do mês numa só visão, calculadas a partir das datas das suas tarefas.',
+    p1: 'O calendário mostra o mês inteiro com as entregas em cores pastel. Com um duplo clique em um dia você o expande para ver todas as tarefas. Não há nada para sincronizar: ele usa as mesmas tarefas que você já tem nas suas listas.',
+    alt1: 'Calendário mensal do Kiwu com entregas marcadas em vários dias', cap1: 'Visão mensal.', h2: 'Widget de calendário no macOS',
+    p2: 'No macOS 14 ou superior você pode adicionar o widget <em>Calendário de trabalhos</em> com o mês e as próximas entregas. No Linux não há widgets por enquanto.', alt2: 'Widget Calendário de trabalhos do Kiwu mostrando o mês e as próximas entregas',
+    rel: 'Relacionado: <a href="{{tasks}}">tarefas e quadro</a> · <a href="{{macos}}">Kiwu para macOS</a>.' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <p>{D.p1}</p>
+  <figure><Shot src={calendario} alt={D.alt1} /><figcaption>{D.cap1}</figcaption></figure>
+  <h2>{D.h2}</h2>
+  <p set:html={h(D.p2)} />
+  <figure><Shot src={wCal} alt={D.alt2} sizes="(min-width: 640px) 480px, 100vw" /></figure>
+  <p set:html={h(D.rel)} />
+</Page>

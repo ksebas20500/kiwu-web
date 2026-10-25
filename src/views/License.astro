@@ -1,0 +1,27 @@
+---
+import Page from '../layouts/Page.astro';
+import { REPO } from '../site';
+import { fill, type Lang, type Route } from '../i18n';
+import text from '../assets/LICENSE.txt?raw';
+const { lang, route } = Astro.props as { lang: Lang; route: Route };
+const D = {
+  es: { title: 'Licencia MIT de Kiwu', h1: 'Licencia', description: 'Kiwu es software libre distribuido bajo la licencia MIT. Texto completo y autoría.',
+    lead: 'Kiwu se distribuye bajo la licencia MIT. Autor y mantenedor: Kevin Sebastián Medina Nava.',
+    p1: `Puedes consultar el código en <a href="{{REPO}}" rel="noopener">GitHub</a>. Texto de la licencia, tal como aparece en el repositorio:`,
+    small: 'Kiwu se desarrolló con ayuda de Claude Code (Anthropic) como asistente de programación, según los créditos del repositorio.' },
+  en: { title: 'Kiwu MIT license', h1: 'License', description: 'Kiwu is free software distributed under the MIT license. Full text and authorship.',
+    lead: 'Kiwu is distributed under the MIT license. Author and maintainer: Kevin Sebastián Medina Nava.',
+    p1: `You can browse the code on <a href="{{REPO}}" rel="noopener">GitHub</a>. License text, as it appears in the repository:`,
+    small: 'Kiwu was built with the help of Claude Code (Anthropic) as a programming assistant, according to the repository credits.' },
+  pt: { title: 'Licença MIT do Kiwu', h1: 'Licença', description: 'O Kiwu é software livre distribuído sob a licença MIT. Texto completo e autoria.',
+    lead: 'O Kiwu é distribuído sob a licença MIT. Autor e mantenedor: Kevin Sebastián Medina Nava.',
+    p1: `Você pode ver o código no <a href="{{REPO}}" rel="noopener">GitHub</a>. Texto da licença, como aparece no repositório:`,
+    small: 'O Kiwu foi desenvolvido com a ajuda do Claude Code (Anthropic) como assistente de programação, conforme os créditos do repositório.' },
+}[lang];
+const h = (s: string) => fill(lang, s);
+---
+<Page lang={lang} route={route} title={D.title} h1={D.h1} description={D.description} lead={D.lead}>
+  <p set:html={h(D.p1)} />
+  <pre style="white-space: pre-wrap" tabindex="0">{text}</pre>
+  <p class="small">{D.small}</p>
+</Page>
