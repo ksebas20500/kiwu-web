@@ -12,7 +12,8 @@ const fullTitle = route === 'home' ? title : `${title}${t.titleSuffix}`;
 // Sin SITE_URL (dominio aún no definido) todo el sitio se marca noindex para no indexar un dominio provisional.
 const robots = noindex || !SITE_URL_SET ? 'noindex, nofollow' : null;
 const alts = route ? langs.map((l) => ({ l, href: path(l, route) })) : [];
-const navKeys = ['features', 'android', 'students', 'install', 'macos', 'linux', 'privacy', 'faq'] as const;
+const navKeys = ['features', 'android', 'install'] as const;
+const footKeys = ['students', 'macos', 'linux', 'nocloud', 'privacy', 'faq', 'license'] as const;
 const navRoute = (k: (typeof navKeys)[number]) => path(lang, k);
 const isCurrent = (k: (typeof navKeys)[number]) => (k === 'features' ? pathname.startsWith(navRoute(k)) : pathname === navRoute(k));
 ---
@@ -94,10 +95,7 @@ const isCurrent = (k: (typeof navKeys)[number]) => (k === 'features' ? pathname.
         </div>
         <nav aria-label={t.footerNav}>
           <ul>
-            <li><a href={path(lang, 'install')}>{t.footerLinks.install}</a></li>
-            <li><a href={path(lang, 'nocloud')}>{t.footerLinks.nocloud}</a></li>
-            <li><a href={path(lang, 'privacy')}>{t.footerLinks.privacy}</a></li>
-            <li><a href={path(lang, 'license')}>{t.footerLinks.license}</a></li>
+            {footKeys.map((k) => <li><a href={path(lang, k)}>{t.footerLinks[k]}</a></li>)}
             <li><a href={REPO} rel="noopener">{t.github}</a></li>
           </ul>
         </nav>
