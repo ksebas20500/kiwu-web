@@ -124,3 +124,12 @@ details[open] summary { margin-bottom: .5rem; }
 .langs a:hover { color: var(--ink); }
 .langs a[aria-current="true"] { background: var(--accent-soft); color: var(--ink); }
 @media (max-width: 520px) { .site-header .cta-top { display: none; } .tools { gap: .4rem; } }
+.tools { flex: none; }
+.site-header .cta-top { white-space: nowrap; }
+@media (min-width: 860px) and (max-width: 1359px) {
+  .bar { flex-wrap: wrap; row-gap: .1rem; }
+  .tools { order: 2; }
+  .mainnav { order: 3; flex: 0 0 100%; }
+  .mainnav ul { flex-wrap: wrap; }
+}
+@media (min-width: 1360px) { .mainnav { flex: 1 1 auto; min-width: 0; } .mainnav ul { justify-content: center; flex-wrap: nowrap; } }
